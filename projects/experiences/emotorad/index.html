@@ -295,34 +295,47 @@
             approaches.
           </p>
           <h2 class="section-subheading">Scalability & Performance</h2>
-          <p>
-            Emotorad's backend architecture is designed for high performance and
-            scalability. Built in Go, the system leverages Go's strong
-            concurrency features to efficiently manage multiple requests through
-            lightweight goroutines, ensuring fast and reliable processing of
-            real-time electric bike data.
-          </p>
           <div class="image-container">
             <img
               src="rendered/scalability.svg"
               alt="Emotorad Architecture Scalability"
             />
           </div>
-          <p>
-            For scalability, the system uses Docker containers orchestrated by
-            Kubernetes on Amazon EKS. The Horizontal Pod Autoscaler (HPA)
-            dynamically adjusts the number of running pods based on traffic and
-            workload, ensuring the system scales seamlessly with demand. The
-            load balancer with TLS termination distributes incoming requests
-            across these pods, enhancing fault tolerance and optimizing resource
-            utilization.
-          </p>
-          <p>
-            Stateful Apache Flink jobs, for real-time data processing, are
-            managed and scaled using the Flink Kubernetes Operator. This ensures
-            that the data aggregation and processing pipelines adapt dynamically
-            to varying loads, maintaining efficient and consistent performance.
-          </p>
+          <ul>
+            <li>
+              <strong>Go Concurrency:</strong>
+              Go's goroutines handled thousands of concurrent API requests and
+              database queries without blocking, efficiently serving real-time
+              bike data from Redis and trip histories from PostgreSQL and
+              Cassandra.
+            </li>
+            <li>
+              <strong>Independent Microservice Scaling:</strong>
+              Kubernetes could scale individual services based on demand -
+              spinning up more route mapping instances during rush hour without
+              affecting other services.
+            </li>
+            <li>
+              <strong>Redis for Fast Data Access:</strong>
+              Redis provided instant retrieval of current bike states and user
+              data, ensuring zero-delay responses in the companion app.
+            </li>
+            <li>
+              <strong>Cassandra's Write Optimization:</strong>
+              Cassandra handled massive write loads from thousands of bikes
+              simultaneously without performance degradation.
+            </li>
+            <li>
+              <strong>Kafka Message Buffering:</strong>
+              Kafka acted as a shock absorber, buffering traffic spikes and
+              distributing messages smoothly across the pipeline.
+            </li>
+            <li>
+              <strong>Load Testing Validation:</strong>
+              Simulated testing with 10,000+ bikes proved the architecture could
+              scale well beyond current needs.
+            </li>
+          </ul>
 
           <h2 class="section-subheading">Security</h2>
           <div class="image-container">
