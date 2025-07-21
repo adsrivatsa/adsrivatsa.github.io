@@ -1,149 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Projects</title>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-  <link rel="stylesheet" href="../../../index.css">
-  <link rel="stylesheet" href="../../project-styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="../../project-content.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
-
-</head>
-<body>
-<div class="navbar">
-  <a href="../../..">Home</a>
-  <a href="../.." class="active">Projects</a>
-  <a href="../../../about">About</a>
-  <a href="../../../contact">Contact</a>
-</div>
-
-<div class="content">
-  <div class="wrapper">
-    <div class="left-sidebar">
-      <h1>Contents</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Projects</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <link rel="stylesheet" href="../../../index.css" />
+    <link rel="stylesheet" href="../../project-styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="../../project-content.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="../../..">Home</a>
+      <a href="../.." class="active">Projects</a>
+      <a href="../../../about">About</a>
+      <a href="../../../contact">Contact</a>
     </div>
 
-    <div class="project-content">
-      <h1 class="section-heading">Project Overview</h1>
-      <h2 class="section-subheading">Project Name</h2>
-      <p>Wynter's Dreams</p>
+    <div class="content">
+      <div class="wrapper">
+        <div class="left-sidebar">
+          <h1>Contents</h1>
+        </div>
 
-      <h2 class="section-subheading">Duration</h2>
-      <p>August 2023 - January 2024</p>
+        <div class="project-content">
+          <h1 class="section-heading">Project Overview</h1>
+          <h2 class="section-subheading">Project Name</h2>
+          <p>Wynter's Dreams</p>
 
-      <h2 class="section-subheading">Role</h2>
-      <p>Backend Developer</p>
+          <h2 class="section-subheading">Duration</h2>
+          <p>August 2023 - January 2024</p>
 
-      <h2 class="section-subheading">Project Description</h2>
-      <p>
-        Wynter's Dreams is an interactive platform designed to bring children's books to life. The website allows users
-        to explore stories where each page can lead to different paths, creating a dynamic reading experience. I worked
-        on the backend, developing robust systems for user creation and management, and built an admin dashboard where
-        administrators can easily upload and manage books, blogs, and testimonials. To support the interactive nature of
-        the books, each page is stored in a JSON object format, allowing seamless navigation through the story. This
-        project highlights my expertise in backend development, focusing on user management and dynamic content
-        delivery.
-      </p>
+          <h2 class="section-subheading">Role</h2>
+          <p>Backend Developer</p>
 
-      <h1 class="section-heading">Architecture & Design</h1>
-      <h2 class="section-subheading">Overview</h2>
-      <div class="image-container">
-        <a
-          href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/wynters-dreams/rendered/overview.svg">
-          <img src="rendered/overview.svg" alt="Wynter's Dreams Architecture Overview" />
-        </a>
-      </div>
-      <p>
-        The architecture of Wynter's Dreams emphasizes scalability, security, and efficiency to provide a seamless
-        interactive experience. The backend, built in Go, handles core functionalities such as user management and
-        content delivery, leveraging Go’s performance and concurrency.
-      </p>
-      <p>
-        PostgreSQL manages metadata for books, blogs, and users, while Amazon S3 stores book content, images, and JSON
-        objects. This separation ensures efficient data handling and high performance.
-      </p>
-      <p>
-        User authentication uses a simple username and password, with authorization handled by PASETO tokens for secure
-        access control. A load balancer with TLS termination routes traffic to backend services and manages SSL
-        certificates, ensuring encrypted data transfer.
-      </p>
-      <p>
-        The frontend communicates with the backend via REST APIs, accessing metadata from PostgreSQL and content from S3
-        to deliver an engaging user experience. This setup supports robust and flexible growth with minimal disruption.
-      </p>
+          <h2 class="section-subheading">Project Description</h2>
+          <p>
+            Wynter's Dreams is an interactive platform designed to bring
+            children's books to life. The website allows users to explore
+            stories where each page can lead to different paths, creating a
+            dynamic reading experience. I worked on the backend, developing
+            robust systems for user creation and management, and built an admin
+            dashboard where administrators can easily upload and manage books,
+            blogs, and testimonials. To support the interactive nature of the
+            books, each page is stored in a JSON object format, allowing
+            seamless navigation through the story. This project highlights my
+            expertise in backend development, focusing on user management and
+            dynamic content delivery.
+          </p>
 
-      <h2 class="section-subheading">Scalability & Performance</h2>
-      <p>
-        Wynter's Dreams is designed for high performance and scalability. The backend, built in Go, utilizes its strong
-        concurrency features to efficiently handle multiple requests through lightweight goroutines, ensuring fast and
-        reliable processing.
-      </p>
-      <div class="image-container">
-        <img src="rendered/scalability.svg" alt="Wynter's Dreams Architecture Scalability" />
-      </div>
-      <p>
-        For scalability, the system uses Docker containers orchestrated by AWS Elastic Container Service (ECS). ECS
-        automates the deployment and scaling of containers, adjusting the number of instances based on traffic demands.
-        The load balancer with TLS termination distributes incoming requests across these instances, enhancing fault
-        tolerance and resource utilization.
-      </p>
-      <p>
-        This combination of Go’s concurrency, Docker-based scaling, and AWS ECS automation ensures that Wynter’s Dreams
-        can handle growing traffic and data demands effectively while maintaining optimal performance.
-      </p>
+          <h1 class="section-heading">Architecture & Design</h1>
+          <h2 class="section-subheading">Overview</h2>
+          <div class="image-container">
+            <a
+              href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/wynters-dreams/rendered/overview.svg"
+            >
+              <img
+                src="rendered/overview.svg"
+                alt="Wynter's Dreams Architecture Overview"
+              />
+            </a>
+          </div>
+          <p>
+            The architecture of Wynter's Dreams emphasizes scalability,
+            security, and efficiency to provide a seamless interactive
+            experience. The backend, built in Go, handles core functionalities
+            such as user management and content delivery, leveraging Go’s
+            performance and concurrency.
+          </p>
+          <p>
+            PostgreSQL manages metadata for books, blogs, and users, while
+            Amazon S3 stores book content, images, and JSON objects. This
+            separation ensures efficient data handling and high performance.
+          </p>
+          <p>
+            User authentication uses a simple username and password, with
+            authorization handled by PASETO tokens for secure access control. A
+            load balancer with TLS termination routes traffic to backend
+            services and manages SSL certificates, ensuring encrypted data
+            transfer.
+          </p>
+          <p>
+            The frontend communicates with the backend via REST APIs, accessing
+            metadata from PostgreSQL and content from S3 to deliver an engaging
+            user experience. This setup supports robust and flexible growth with
+            minimal disruption.
+          </p>
 
-      <h2 class="section-subheading">Security</h2>
-      <div class="image-container">
-        <img src="rendered/security.svg" alt="Wynter's Dreams Architecture Security" />
-      </div>
-      <p>
-        The security of Wynter's Dreams is a top priority, with multiple layers of protection implemented to safeguard
-        data and communications. All data stored in PostgreSQL and Amazon S3 is encrypted at rest, ensuring that
-        sensitive information remains secure from unauthorized access. The load balancer employs TLS to encrypt all data
-        in transit, protecting it from potential interception during transmission.
-      </p>
-      <p>
-        Additionally, all communication between backend services occurs within a private cloud environment, further
-        isolating and securing internal data exchanges. This multi-faceted approach ensures robust protection for both
-        data at rest and in transit.
-      </p>
+          <h2 class="section-subheading">Scalability & Performance</h2>
+          <p>
+            Wynter's Dreams is designed for high performance and scalability.
+            The backend, built in Go, utilizes its strong concurrency features
+            to efficiently handle multiple requests through lightweight
+            goroutines, ensuring fast and reliable processing.
+          </p>
+          <div class="image-container">
+            <img
+              src="rendered/scalability.svg"
+              alt="Wynter's Dreams Architecture Scalability"
+            />
+          </div>
+          <p>
+            For scalability, the system uses Docker containers orchestrated by
+            AWS Elastic Container Service (ECS). ECS automates the deployment
+            and scaling of containers, adjusting the number of instances based
+            on traffic demands. The load balancer with TLS termination
+            distributes incoming requests across these instances, enhancing
+            fault tolerance and resource utilization.
+          </p>
+          <p>
+            This combination of Go’s concurrency, Docker-based scaling, and AWS
+            ECS automation ensures that Wynter’s Dreams can handle growing
+            traffic and data demands effectively while maintaining optimal
+            performance.
+          </p>
 
-      <h2 class="section-subheading">Deployment & Monitoring</h2>
-      <div class="image-container">
-        <img src="rendered/monitoring.svg" alt="Wynter's Dreams Architecture Monitoring" />
-      </div>
-      <p>
-        Deployment for Wynter's Dreams is managed using AWS Elastic Container Service (ECS), which facilitates automated
-        scaling and orchestration of Docker containers. ECS handles the deployment of application containers, scaling
-        them up or down based on real-time traffic demands, and ensures smooth and efficient management of containerized
-        services.
-      </p>
-      <p>
-        For monitoring, AWS CloudWatch is employed to track and analyze logs generated by the application. CloudWatch
-        provides detailed insights into system performance and operational health, enabling proactive identification and
-        resolution of issues. This integration ensures that the platform remains robust and performs optimally, with
-        continuous monitoring and logging to support effective management and troubleshooting.
-      </p>
+          <h2 class="section-subheading">Security</h2>
+          <div class="image-container">
+            <img
+              src="rendered/security.svg"
+              alt="Wynter's Dreams Architecture Security"
+            />
+          </div>
+          <p>
+            The security of Wynter's Dreams is a top priority, with multiple
+            layers of protection implemented to safeguard data and
+            communications. All data stored in PostgreSQL and Amazon S3 is
+            encrypted at rest, ensuring that sensitive information remains
+            secure from unauthorized access. The load balancer employs TLS to
+            encrypt all data in transit, protecting it from potential
+            interception during transmission.
+          </p>
+          <p>
+            Additionally, all communication between backend services occurs
+            within a private cloud environment, further isolating and securing
+            internal data exchanges. This multi-faceted approach ensures robust
+            protection for both data at rest and in transit.
+          </p>
 
-      <h1 class="section-heading">Implementation Details</h1>
-      <h2 class="section-subheading">Challenges Faced</h2>
-      <p>
-        One significant challenge was devising an efficient method to index and manage book images, given that there
-        isn’t a straightforward, direct flow between the images and their associated books. Initially, linking images to
-        books and ensuring they were retrieved and displayed correctly posed difficulties due to the complex
-        relationships and lack of a unified schema. To address this, I designed a custom indexing system where metadata
-        about each image was stored alongside book data in PostgreSQL. This system included a unique identifier for each
-        image, which was then used to establish a clear association between the images and their respective books.
-        I also implemented a structured naming convention and organised the images in S3 with directory-like
-        structures to facilitate efficient retrieval and management.
-      </p>
-      <p>Go model I ended up with:</p>
-      <pre>
+          <h2 class="section-subheading">Deployment & Monitoring</h2>
+          <div class="image-container">
+            <img
+              src="rendered/monitoring.svg"
+              alt="Wynter's Dreams Architecture Monitoring"
+            />
+          </div>
+          <p>
+            Deployment for Wynter's Dreams is managed using AWS Elastic
+            Container Service (ECS), which facilitates automated scaling and
+            orchestration of Docker containers. ECS handles the deployment of
+            application containers, scaling them up or down based on real-time
+            traffic demands, and ensures smooth and efficient management of
+            containerized services.
+          </p>
+          <p>
+            For monitoring, AWS CloudWatch is employed to track and analyze logs
+            generated by the application. CloudWatch provides detailed insights
+            into system performance and operational health, enabling proactive
+            identification and resolution of issues. This integration ensures
+            that the platform remains robust and performs optimally, with
+            continuous monitoring and logging to support effective management
+            and troubleshooting.
+          </p>
+
+          <h1 class="section-heading">Implementation Details</h1>
+          <h2 class="section-subheading">Challenges Faced</h2>
+          <p>
+            One significant challenge was devising an efficient method to index
+            and manage book images, given that there isn’t a straightforward,
+            direct flow between the images and their associated books.
+            Initially, linking images to books and ensuring they were retrieved
+            and displayed correctly posed difficulties due to the complex
+            relationships and lack of a unified schema. To address this, I
+            designed a custom indexing system where metadata about each image
+            was stored alongside book data in PostgreSQL. This system included a
+            unique identifier for each image, which was then used to establish a
+            clear association between the images and their respective books. I
+            also implemented a structured naming convention and organised the
+            images in S3 with directory-like structures to facilitate efficient
+            retrieval and management.
+          </p>
+          <p>Go model I ended up with:</p>
+          <pre>
         <code class="language-go">
 type BookPaging struct {
 	BookId string   `json:"book_id"`
@@ -166,92 +217,130 @@ type Button struct {
 }
         </code>
       </pre>
-      <p>
-        Integrating CCAvenue for payment processing in Go proved challenging due to the lack of direct support and
-        documentation for Go. The primary difficulty was implementing the required encryption and decryption protocols
-        for secure communication with CCAvenue’s API. To overcome this, I wrote custom code to handle the specific
-        encryption methods mandated by CCAvenue. This involved creating encryption routines to securely transmit payment
-        information and implementing decryption logic to process responses from CCAvenue.
-      </p>
+          <p>
+            Integrating CCAvenue for payment processing in Go proved challenging
+            due to the lack of direct support and documentation for Go. The
+            primary difficulty was implementing the required encryption and
+            decryption protocols for secure communication with CCAvenue’s API.
+            To overcome this, I wrote custom code to handle the specific
+            encryption methods mandated by CCAvenue. This involved creating
+            encryption routines to securely transmit payment information and
+            implementing decryption logic to process responses from CCAvenue.
+          </p>
 
-      <h2 class="section-subheading">Key Features</h2>
-      <ul>
-        <li>
-          <strong>Interactive Storytelling:</strong> Dynamic story paths, allowing unique user choices.
-        </li>
-        <li>
-          <strong>User Management:</strong> Backend system for user registration, authentication, and roles.
-        </li>
-        <li>
-          <strong>Admin Dashboard:</strong> Easy content upload and management for administrators.
-        </li>
-        <li>
-          <strong>Secure Content Delivery:</strong> TLS encryption and encrypted storage on Amazon S3.
-        </li>
-        <li>
-          <strong>JSON-Based Navigation:</strong> Seamless story navigation with JSON object format.
-        </li>
-        <li>
-          <strong>Image Management:</strong> Custom system for efficient image retrieval from S3.
-        </li>
-        <li>
-          <strong>Payment Integration:</strong> Secure CCAvenue payment processing with custom encryption.
-        </li>
-      </ul>
+          <h2 class="section-subheading">Key Features</h2>
+          <ul>
+            <li>
+              <strong>Interactive Storytelling:</strong>
+              Dynamic story paths, allowing unique user choices.
+            </li>
+            <li>
+              <strong>User Management:</strong>
+              Backend system for user registration, authentication, and roles.
+            </li>
+            <li>
+              <strong>Admin Dashboard:</strong>
+              Easy content upload and management for administrators.
+            </li>
+            <li>
+              <strong>Secure Content Delivery:</strong>
+              TLS encryption and encrypted storage on Amazon S3.
+            </li>
+            <li>
+              <strong>JSON-Based Navigation:</strong>
+              Seamless story navigation with JSON object format.
+            </li>
+            <li>
+              <strong>Image Management:</strong>
+              Custom system for efficient image retrieval from S3.
+            </li>
+            <li>
+              <strong>Payment Integration:</strong>
+              Secure CCAvenue payment processing with custom encryption.
+            </li>
+          </ul>
 
-      <h1 class="section-heading">Testing & Deployment</h1>
-      <h2 class="section-subheading">Testing Strategies</h2>
-      <p>
-        For testing APIs, I implemented mocking through dependency injection, which allowed for isolating the APIs from
-        external services. By injecting mocked dependencies during testing, I could simulate various scenarios, ensuring
-        that the APIs were thoroughly tested without relying on external systems. This approach provided a controlled
-        testing environment, resulting in more reliable and efficient tests.
-      </p>
-      <p>
-        I developed tests for database queries using sqlc in Go. These tests were designed to validate the
-        correctness of SQL queries generated by sqlc, ensuring accurate data retrieval and manipulation. By focusing on
-        the integrity of the database interactions.
-      </p>
+          <h1 class="section-heading">Testing & Deployment</h1>
+          <h2 class="section-subheading">Testing Strategies</h2>
+          <p>
+            For testing APIs, I implemented mocking through dependency
+            injection, which allowed for isolating the APIs from external
+            services. By injecting mocked dependencies during testing, I could
+            simulate various scenarios, ensuring that the APIs were thoroughly
+            tested without relying on external systems. This approach provided a
+            controlled testing environment, resulting in more reliable and
+            efficient tests.
+          </p>
+          <p>
+            I developed tests for database queries using sqlc in Go. These tests
+            were designed to validate the correctness of SQL queries generated
+            by sqlc, ensuring accurate data retrieval and manipulation. By
+            focusing on the integrity of the database interactions.
+          </p>
 
-      <h2 class="section-subheading">Deployment Automation</h2>
-      <div class="image-container">
-        <img src="rendered/deployment.svg" alt="Wynter's Dreams Deployment Automation">
+          <h2 class="section-subheading">Deployment Automation</h2>
+          <div class="image-container">
+            <img
+              src="rendered/deployment.svg"
+              alt="Wynter's Dreams Deployment Automation"
+            />
+          </div>
+          <p>
+            In the initial stages of deployment automation for Wynter's Dreams,
+            I used a Makefile to streamline the process. The Makefile ran
+            commands that built the backend Docker image, pushed it to AWS
+            Elastic Container Registry (ECR), and then updated the deployment on
+            AWS Elastic Container Service (ECS). However, to automate this
+            process further, I transitioned to using GitHub Actions. This switch
+            allowed for a more seamless, automated deployment pipeline directly
+            tied to the repository, improving efficiency and removing manual
+            intervention.
+          </p>
+        </div>
+
+        <div class="right-sidebar">
+          <h1>Tools Used</h1>
+
+          <h2 class="section-heading">Languages</h2>
+          <a href="https://go.dev/" target="_blank">Go</a>
+
+          <h2 class="section-heading">Stateful Services</h2>
+          <a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a>
+          <a href="https://aws.amazon.com/s3/" target="_blank">AWS S3</a>
+
+          <h2 class="section-heading">Deployment</h2>
+          <a href="https://www.docker.com/" target="_blank">Docker</a>
+
+          <h2 class="section-heading">Payments</h2>
+          <a href="https://www.ccavenue.com/">CCAvenue</a>
+
+          <h2 class="section-heading">Amazon Web Services</h2>
+          <a href="https://aws.amazon.com/cloudwatch/" target="_blank">
+            Cloudwatch
+          </a>
+          <a href="https://aws.amazon.com/ecs/" target="_blank">
+            Elastic Container Service
+          </a>
+          <a href="https://aws.amazon.com/ecr/" target="_blank">
+            Elastic Container Registry
+          </a>
+          <a
+            href="https://aws.amazon.com/elasticloadbalancing/"
+            target="_blank"
+          >
+            Elastic Load Balancing
+          </a>
+          <a href="https://aws.amazon.com/ec2/" target="_blank">
+            Elastic Cloud Compute
+          </a>
+          <a href="https://aws.amazon.com/rds/" target="_blank">
+            Relational Database Service
+          </a>
+          <a href="https://aws.amazon.com/s3/" target="_blank">
+            Simple Storage Service
+          </a>
+        </div>
       </div>
-      <p>
-        In the initial stages of deployment automation for Wynter's Dreams, I used a Makefile to streamline the process.
-        The Makefile ran commands that built the backend Docker image, pushed it to AWS Elastic Container Registry
-        (ECR), and then updated the deployment on AWS Elastic Container Service (ECS). However, to automate this process
-        further, I transitioned to using GitHub Actions. This switch allowed for a more seamless, automated deployment
-        pipeline directly tied to the repository, improving efficiency and removing manual intervention.
-      </p>
     </div>
-
-    <div class="right-sidebar">
-      <h1>Tools Used</h1>
-
-      <h2 class="section-heading">Languages</h2>
-      <a href="https://go.dev/" target="_blank">Go</a>
-
-      <h2 class="section-heading">Stateful Services</h2>
-      <a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a>
-      <a href="https://aws.amazon.com/s3/" target="_blank">AWS S3</a>
-
-      <h2 class="section-heading">Deployment</h2>
-      <a href="https://www.docker.com/" target="_blank">Docker</a>
-
-      <h2 class="section-heading">Payments</h2>
-      <a href="https://www.ccavenue.com/">CCAvenue</a>
-
-      <h2 class="section-heading">Amazon Web Services</h2>
-      <a href="https://aws.amazon.com/cloudwatch/" target="_blank">Cloudwatch</a>
-      <a href="https://aws.amazon.com/ecs/" target="_blank">Elastic Container Service</a>
-      <a href="https://aws.amazon.com/ecr/" target="_blank">Elastic Container Registry</a>
-      <a href="https://aws.amazon.com/elasticloadbalancing/" target="_blank">Elastic Load Balancing</a>
-      <a href="https://aws.amazon.com/ec2/" target="_blank">Elastic Cloud Compute</a>
-      <a href="https://aws.amazon.com/rds/" target="_blank">Relational Database Service</a>
-      <a href="https://aws.amazon.com/s3/" target="_blank">Simple Storage Service</a>
-    </div>
-  </div>
-</div>
-</body>
+  </body>
 </html>

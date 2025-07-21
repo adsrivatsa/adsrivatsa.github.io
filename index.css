@@ -1,44 +1,45 @@
 body {
-    font-family: 'Epilogue', sans-serif;
+  font-family: "Epilogue", sans-serif;
 }
 
-p, li {
-    font-family: 'Inter', sans-serif;
+p,
+li {
+  font-family: "Inter", sans-serif;
 }
 
 .content {
-    margin: 4% 4% 0 4%;
-    padding-top: 70px;
+  margin: 4% 4% 0 4%;
+  padding-top: 70px;
 }
 
 .navbar {
-    display: flex;
-    justify-content: center;
-    padding: 14px 0;
-    background-color: white;
-    width: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  padding: 14px 0;
+  background-color: white;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar a {
-    margin: 10px;
-    padding: 14px 20px;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    font-family: 'Epilogue', sans-serif;
+  margin: 10px;
+  padding: 14px 20px;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-family: "Epilogue", sans-serif;
 }
 
 .navbar a:hover {
-    background-color: #c6c7ff;
-    border-radius: 64px;
+  background-color: #c6c7ff;
+  border-radius: 64px;
 }
 
 .navbar a.active {
-    background-color: #c6c7ff;
-    border-radius: 64px;
+  background-color: #c6c7ff;
+  border-radius: 64px;
 }

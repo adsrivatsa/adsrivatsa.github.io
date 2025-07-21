@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.querySelector(".left-sidebar")
   sidebar.innerHTML = "<h1>Contents</h1>"
-  const headings = document.querySelectorAll(".project-content h1, .project-content h2")
+  const headings = document.querySelectorAll(
+    ".project-content h1, .project-content h2"
+  )
 
   let h1Counter = 1
   let h2Counter = 1
 
-  headings.forEach(heading => {
+  headings.forEach((heading) => {
     if (heading.tagName === "H1") {
       heading.id = `${h1Counter}`
 
@@ -20,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       h1Counter++
       h2Counter = 1
-
     } else if (heading.tagName === "H2") {
       heading.id = `${h1Counter - 1}-${h2Counter}`
 

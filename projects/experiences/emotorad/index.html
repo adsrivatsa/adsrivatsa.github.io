@@ -1,292 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Projects</title>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-  <link rel="stylesheet" href="../../../index.css">
-  <link rel="stylesheet" href="../../project-styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="../../project-content.js"></script>
-</head>
-<body>
-<div class="navbar">
-  <a href="../../..">Home</a>
-  <a href="../.." class="active">Projects</a>
-  <a href="../../../about">About</a>
-  <a href="../../../contact">Contact</a>
-</div>
-
-<div class="content">
-  <div class="wrapper">
-    <div class="left-sidebar">
-      <h1>Contents</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Projects</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <link rel="stylesheet" href="../../../index.css" />
+    <link rel="stylesheet" href="../../project-styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="../../project-content.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="../../..">Home</a>
+      <a href="../.." class="active">Projects</a>
+      <a href="../../../about">About</a>
+      <a href="../../../contact">Contact</a>
     </div>
 
-    <div class="project-content">
-      <h1 class="section-heading">Project Overview</h1>
-      <h2 class="section-subheading">Company Name</h2>
-      <p>Emotorad</p>
+    <div class="content">
+      <div class="wrapper">
+        <div class="left-sidebar">
+          <h1>Contents</h1>
+        </div>
 
-      <h2 class="section-subheading">Duration</h2>
-      <p>August 2023 - March 2024</p>
+        <div class="project-content">
+          <h1 class="section-heading">Project Overview</h1>
+          <h2 class="section-subheading">Company Name</h2>
+          <p>Emotorad</p>
 
-      <h2 class="section-subheading">Role</h2>
-      <p>Cloud and Backend Intern and Consultant</p>
+          <h2 class="section-subheading">Duration</h2>
+          <p>August 2023 - March 2024</p>
 
-      <h2 class="section-subheading">Project Description</h2>
-      <p>
-        At Emotorad, I led the design and development of a scalable backend architecture for real-time electric bike
-        data ingestion, utilizing MQTT brokers and stateful Apache Flink applications for data aggregation and
-        processing with Cassandra, Redis, and Kafka as sinks. I developed and maintained Go REST microservices for
-        dashboards and the companion app, orchestrated deployment using AWS and Kubernetes, and managed a data lake on
-        AWS S3 with queries via Presto. Additionally, I deployed Firebase cloud functions for push notifications and
-        contributed to team growth by interviewing candidates for full-time and intern roles.
-      </p>
+          <h2 class="section-subheading">Role</h2>
+          <p>Cloud and Backend Intern and Consultant</p>
 
-      <h1 class="section-heading">Architecture & Design</h1>
-      <h2 class="section-subheading">Overview</h2>
-      <div class="image-container">
-        <a href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/emotorad/rendered/overview.svg">
-          <img src="rendered/overview.svg" alt="Emotorad Architecture Overview" />
-        </a>
+          <h2 class="section-subheading">Project Description</h2>
+          <p>
+            At Emotorad, I led the design and development of a scalable backend
+            architecture for real-time electric bike data ingestion, utilizing
+            MQTT brokers and stateful Apache Flink applications for data
+            aggregation and processing with Cassandra, Redis, and Kafka as
+            sinks. I developed and maintained Go REST microservices for
+            dashboards and the companion app, orchestrated deployment using AWS
+            and Kubernetes, and managed a data lake on AWS S3 with queries via
+            Presto. Additionally, I deployed Firebase cloud functions for push
+            notifications and contributed to team growth by interviewing
+            candidates for full-time and intern roles.
+          </p>
+
+          <h1 class="section-heading">Architecture & Design</h1>
+          <h2 class="section-subheading">Overview</h2>
+          <div class="image-container">
+            <a
+              href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/emotorad/rendered/overview.svg"
+            >
+              <img
+                src="rendered/overview.svg"
+                alt="Emotorad Architecture Overview"
+              />
+            </a>
+          </div>
+          <p>
+            The backend architecture for Emotorad was designed with a strong
+            focus on scalability and real-time data processing to handle the
+            ingestion of electric bike data. PostgreSQL was employed to manage
+            stateful services across various microservices, ensuring reliable
+            and consistent data handling.
+          </p>
+          <p>
+            To enhance security and access control, the system used PASETO
+            tokens with asymmetric keys for authenticating multiple services.
+            This approach ensured secure communication and robust authentication
+            across the platform.
+          </p>
+          <p>
+            Real-time data processing was a key aspect of the architecture, with
+            stateful Apache Flink applications developed to perform map, reduce,
+            and filter operations. These applications worked in tandem with
+            Cassandra, Redis, and Kafka as data sinks, allowing for efficient
+            data aggregation and processing.
+          </p>
+          <p>
+            The architecture also included Go-based REST microservices, which
+            served as the backbone for both the Emotorad dashboards and the
+            companion app. These microservices provided a seamless and
+            responsive user experience, facilitating real-time interaction with
+            the system.
+          </p>
+          <p>
+            Deployment was managed using Amazon Web Services (AWS) and
+            Kubernetes, allowing for scalable and resilient infrastructure. This
+            setup ensured that the system could handle varying loads and
+            maintain high availability.
+          </p>
+          <p>
+            To support data storage and analysis, a data lake was maintained on
+            AWS S3, with Presto used for executing queries. This enabled
+            efficient data retrieval and analysis, supporting the platform's
+            real-time processing needs.
+          </p>
+          <p>
+            Firebase cloud functions were deployed to manage push notifications,
+            ensuring timely and reliable communication with users across the
+            platform.
+          </p>
+
+          <h2 class="section-subheading">Scalability & Performance</h2>
+          <p>
+            Emotorad's backend architecture is designed for high performance and
+            scalability. Built in Go, the system leverages Go's strong
+            concurrency features to efficiently manage multiple requests through
+            lightweight goroutines, ensuring fast and reliable processing of
+            real-time electric bike data.
+          </p>
+          <div class="image-container">
+            <img
+              src="rendered/scalability.svg"
+              alt="Emotorad Architecture Scalability"
+            />
+          </div>
+          <p>
+            For scalability, the system uses Docker containers orchestrated by
+            Kubernetes on Amazon EKS. The Horizontal Pod Autoscaler (HPA)
+            dynamically adjusts the number of running pods based on traffic and
+            workload, ensuring the system scales seamlessly with demand. The
+            load balancer with TLS termination distributes incoming requests
+            across these pods, enhancing fault tolerance and optimizing resource
+            utilization.
+          </p>
+          <p>
+            Stateful Apache Flink jobs, for real-time data processing, are
+            managed and scaled using the Flink Kubernetes Operator. This ensures
+            that the data aggregation and processing pipelines adapt dynamically
+            to varying loads, maintaining efficient and consistent performance.
+          </p>
+
+          <h2 class="section-subheading">Security</h2>
+          <div class="image-container">
+            <img
+              src="rendered/security.svg"
+              alt="Emotorad Architecture Security"
+            />
+          </div>
+          <p>
+            The security of Emotorad's platform is a top priority, with multiple
+            layers of protection in place to safeguard data and communications.
+            All data stored in PostgreSQL, Cassandra, Redis, and Amazon S3 is
+            encrypted at rest, ensuring that sensitive information remains
+            secure from unauthorized access.
+          </p>
+          <p>
+            The platform employs two load balancers: one dedicated to EMQX for
+            MQTT protocol encryption, securing the communication between IoT
+            devices and the backend, and another for REST API encryption,
+            ensuring secure data transmission between microservices. Both load
+            balancers use TLS to encrypt data in transit, protecting it from
+            potential interception during transmission.
+          </p>
+          <p>
+            Additionally, all communication between backend services occurs
+            within a private cloud environment on AWS, further isolating and
+            securing internal data exchanges. This multi-layered security
+            approach ensures robust protection for both data at rest and in
+            transit across the entire platform.
+          </p>
+
+          <h2 class="section-subheading">Deployment & Monitoring</h2>
+          <div class="image-container">
+            <img
+              src="rendered/monitoring.svg"
+              alt="Emotorad Architecture Monitoring"
+            />
+          </div>
+          <p>
+            Deployment for Emotorad's platform is managed using AWS Elastic
+            Kubernetes Service (EKS), which facilitates automated scaling and
+            orchestration of containerized microservices. EKS handles the
+            deployment of application containers, scaling them up or down based
+            on real-time traffic demands, ensuring smooth and efficient
+            management of services.
+          </p>
+          <p>
+            For logging and monitoring, MongoDB and Kafka are employed to track
+            and analyze logs generated by the application. MongoDB stores the
+            logs, while Kafka handles the streaming of log data. A WebSocket
+            client connects to MongoDB, displaying real-time logs in a
+            dashboard, providing detailed insights into system performance and
+            operational health. This setup ensures that the platform remains
+            robust, with continuous monitoring and logging to support effective
+            management and troubleshooting.
+          </p>
+
+          <h1 class="section-heading">Implementation Details</h1>
+          <h2 class="section-subheading">Challenges Faced</h2>
+          <p>
+            A significant challenge was ensuring efficient communication between
+            mobile devices and the backend, specifically for sending data in a
+            format that maintained consistency and integrity. To address this, I
+            adopted Protocol Buffers (protobuf) for data serialisation. Protobuf
+            offers a compact binary format and schema definition that ensured
+            robust and efficient data exchange. Designing the appropriate
+            protobuf schema required careful consideration of data types and
+            structures to align with the needs of both the mobile app and the
+            backend systems.
+          </p>
+          <p>
+            Maintaining stateful services on Kubernetes presented another
+            challenge, particularly in ensuring data consistency and high
+            availability. Implementing StatefulSets with headless services and
+            configuring persistent volume claims helped manage the state across
+            pod restarts and scaling events. This setup required meticulous
+            planning to handle stateful data effectively while ensuring that
+            services remained resilient and performant under varying loads.
+          </p>
+          <p>
+            Ensuring proper checkpointing and recovery in Apache Flink
+            applications was crucial for handling potential crashes and
+            maintaining data integrity. I implemented checkpointing mechanisms
+            that periodically save the state of the Flink jobs, allowing for
+            recovery and continuation from the last successful checkpoint in the
+            event of a failure. This involved configuring the Flink Kubernetes
+            operator to manage scaling and checkpointing, ensuring that the
+            applications could recover gracefully and continue processing
+            without significant data loss or downtime.
+          </p>
+
+          <h2 class="section-subheading">Key Features</h2>
+          <ul>
+            <li>
+              <strong>Efficient Data Serialization:</strong>
+              Used Protocol Buffers (protobuf) for compact, efficient data
+              exchange between mobile devices and the backend.
+            </li>
+            <li>
+              <strong>Stateful Service Management:</strong>
+              Leveraged Kubernetes StatefulSets and persistent volumes for data
+              consistency and high availability.
+            </li>
+            <li>
+              <strong>Advanced Checkpointing:</strong>
+              Configured Flink checkpointing to ensure data recovery and
+              integrity during failures.
+            </li>
+            <li>
+              <strong>Real-Time Data Processing:</strong>
+              Developed stateful Flink applications for real-time data
+              processing with Cassandra, Redis, and Kafka.
+            </li>
+            <li>
+              <strong>Microservice Architecture:</strong>
+              Built and maintained Go REST microservices for dashboards and the
+              Emotorad companion app.
+            </li>
+            <li>
+              <strong>Dynamic Deployment and Scaling:</strong>
+              Used AWS EKS and Kubernetes with HPA and Flink Kubernetes operator
+              for scalable deployments.
+            </li>
+            <li>
+              <strong>Logging and Monitoring:</strong>
+              Implemented logging with MongoDB and Kafka, and real-time log
+              display with a WebSocket client.
+            </li>
+            <li>
+              <strong>Secure Encryption:</strong>
+              Applied TLS encryption for MQTT and REST APIs, and encryption at
+              rest for stateful services.
+            </li>
+          </ul>
+
+          <h1 class="section-heading">Testing & Deployment</h1>
+          <h2 class="section-subheading">Testing Strategies</h2>
+          <p>
+            For testing APIs, I implemented mocking through dependency
+            injection, which allowed for isolating the APIs from external
+            services. By injecting mocked dependencies during testing, I could
+            simulate various scenarios, ensuring that the APIs were thoroughly
+            tested without relying on external systems. This approach provided a
+            controlled testing environment, resulting in more reliable and
+            efficient tests.
+          </p>
+          <p>
+            I developed tests for database queries using sqlc in Go. These tests
+            were designed to validate the correctness of SQL queries generated
+            by sqlc, ensuring accurate data retrieval and manipulation. By
+            focusing on the integrity of the database interactions.
+          </p>
+
+          <h2 class="section-subheading">Deployment Automation</h2>
+          <div class="image-container">
+            <img
+              src="rendered/deployment.svg"
+              alt="Emotorad Deployment Automation"
+            />
+          </div>
+          <p>
+            Initially, I used a Makefile to automate the deployment process for
+            Emotorad. The Makefile pushed Docker images to AWS Elastic Container
+            Registry (ECR) and then employed kubectl commands to pull the latest
+            image and restart the deployment on Kubernetes. To improve
+            efficiency and streamline automation, I transitioned to GitHub
+            Actions, which integrates deployment tasks directly with the
+            repository. Future plans include adopting Jenkins to further enhance
+            and automate the deployment pipeline.
+          </p>
+        </div>
+
+        <div class="right-sidebar">
+          <h1>Tools Used</h1>
+
+          <h2 class="section-heading">Languages</h2>
+          <a href="https://go.dev/" target="_blank">Go</a>
+          <a href="https://www.java.com/en/" target="_blank">Java</a>
+          <a href="https://nodejs.org/en" target="_blank">Node.js</a>
+          <a href="https://www.typescriptlang.org/" target="_blank">
+            TypeScript
+          </a>
+
+          <h2 class="section-heading">Stateful Services</h2>
+          <a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a>
+          <a href="https://cassandra.apache.org/_/index.html" target="_blank">
+            Apache Cassandra
+          </a>
+          <a href="https://redis.io/" target="_blank">Redis</a>
+          <a href="https://firebase.google.com/docs/firestore" target="_blank">
+            Cloud Firestore
+          </a>
+          <a href="https://www.mongodb.com/" target="_blank">MongoDB</a>
+          <a href="https://aws.amazon.com/s3/" target="_blank">AWS S3</a>
+
+          <h2 class="section-heading">Notifications</h2>
+          <a
+            href="https://firebase.google.com/docs/cloud-messaging"
+            target="_blank"
+          >
+            Firebase Cloud Messaging
+          </a>
+          <a href="https://firebase.google.com/docs/functions" target="_blank">
+            Firebase Cloud Functions
+          </a>
+          <a href="https://firebase.google.com/docs/firestore" target="_blank">
+            Cloud Firestore
+          </a>
+
+          <h2 class="section-heading">Streaming Services & Formats</h2>
+          <a href="https://kafka.apache.org/" target="_blank">Apache Kafka</a>
+          <a href="https://flink.apache.org/" target="_blank">Apache Flink</a>
+          <a href="https://www.emqx.com/en" target="_blank">EMQX MQTT</a>
+          <a href="https://parquet.apache.org/" target="_blank">
+            Apache Parquet
+          </a>
+          <a href="https://protobuf.dev/" target="_blank">Protocol Buffers</a>
+          <a href="https://www.json.org/json-en.html" target="_blank">JSON</a>
+
+          <h2 class="section-heading">Analytics</h2>
+          <a href="https://trino.io/" target="_blank">Trino</a>
+
+          <h2 class="section-heading">Deployment</h2>
+          <a href="https://kubernetes.io/" target="_blank">Kubernetes</a>
+          <a href="https://www.docker.com/" target="_blank">Docker</a>
+
+          <h2 class="section-heading">Amazon Web Services</h2>
+          <a href="https://aws.amazon.com/athena/" target="_blank">Athena</a>
+          <a href="https://aws.amazon.com/ecs/" target="_blank">
+            Elastic Container Service
+          </a>
+          <a href="https://aws.amazon.com/ecr/" target="_blank">
+            Elastic Container Registry
+          </a>
+          <a href="https://aws.amazon.com/eks/" target="_blank">
+            Elastic Kubernetes Service
+          </a>
+          <a
+            href="https://aws.amazon.com/elasticloadbalancing/"
+            target="_blank"
+          >
+            Elastic Load Balancing
+          </a>
+          <a href="https://aws.amazon.com/ec2/" target="_blank">
+            Elastic Cloud Compute
+          </a>
+          <a href="https://aws.amazon.com/keyspaces/" target="_blank">
+            Keyspaces
+          </a>
+          <a href="https://aws.amazon.com/memorydb/" target="_blank">
+            MemoryDB
+          </a>
+          <a href="https://aws.amazon.com/msk/" target="_blank">
+            Managed Streaming for Apache Kafka
+          </a>
+          <a href="https://aws.amazon.com/rds/" target="_blank">
+            Relational Database Service
+          </a>
+          <a href="https://aws.amazon.com/s3/" target="_blank">
+            Simple Storage Service
+          </a>
+        </div>
       </div>
-      <p>
-        The backend architecture for Emotorad was designed with a strong focus on scalability and real-time data
-        processing to handle the ingestion of electric bike data. PostgreSQL was employed to manage stateful services
-        across various microservices, ensuring reliable and consistent data handling.
-      </p>
-      <p>
-        To enhance security and access control, the system used PASETO tokens with asymmetric keys for authenticating
-        multiple services. This approach ensured secure communication and robust authentication across the platform.
-      </p>
-      <p>
-        Real-time data processing was a key aspect of the architecture, with stateful Apache Flink applications
-        developed to perform map, reduce, and filter operations. These applications worked in tandem with Cassandra,
-        Redis, and Kafka as data sinks, allowing for efficient data aggregation and processing.
-      </p>
-      <p>
-        The architecture also included Go-based REST microservices, which served as the backbone for both the Emotorad
-        dashboards and the companion app. These microservices provided a seamless and responsive user experience,
-        facilitating real-time interaction with the system.
-      </p>
-      <p>
-        Deployment was managed using Amazon Web Services (AWS) and Kubernetes, allowing for scalable and resilient
-        infrastructure. This setup ensured that the system could handle varying loads and maintain high availability.
-      </p>
-      <p>
-        To support data storage and analysis, a data lake was maintained on AWS S3, with Presto used for executing
-        queries. This enabled efficient data retrieval and analysis, supporting the platform's real-time processing
-        needs.
-      </p>
-      <p>
-        Firebase cloud functions were deployed to manage push notifications, ensuring timely and reliable
-        communication with users across the platform.
-      </p>
-
-      <h2 class="section-subheading">Scalability & Performance</h2>
-      <p>
-        Emotorad's backend architecture is designed for high performance and scalability. Built in Go, the system
-        leverages Go's strong concurrency features to efficiently manage multiple requests through lightweight
-        goroutines, ensuring fast and reliable processing of real-time electric bike data.
-      </p>
-      <div class="image-container">
-        <img src="rendered/scalability.svg" alt="Emotorad Architecture Scalability" />
-      </div>
-      <p>
-        For scalability, the system uses Docker containers orchestrated by Kubernetes on Amazon EKS. The Horizontal Pod
-        Autoscaler (HPA) dynamically adjusts the number of running pods based on traffic and workload, ensuring the
-        system scales seamlessly with demand. The load balancer with TLS termination distributes incoming requests
-        across these pods, enhancing fault tolerance and optimizing resource utilization.
-      </p>
-      <p>
-        Stateful Apache Flink jobs, for real-time data processing, are managed and scaled using the Flink
-        Kubernetes Operator. This ensures that the data aggregation and processing pipelines adapt dynamically to
-        varying loads, maintaining efficient and consistent performance.
-      </p>
-
-      <h2 class="section-subheading">Security</h2>
-      <div class="image-container">
-        <img src="rendered/security.svg" alt="Emotorad Architecture Security" />
-      </div>
-      <p>
-        The security of Emotorad's platform is a top priority, with multiple layers of protection in place to safeguard
-        data and communications. All data stored in PostgreSQL, Cassandra, Redis, and Amazon S3 is encrypted at rest,
-        ensuring that sensitive information remains secure from unauthorized access.
-      </p>
-      <p>
-        The platform employs two load balancers: one dedicated to EMQX for MQTT protocol encryption, securing the
-        communication between IoT devices and the backend, and another for REST API encryption, ensuring secure data
-        transmission between microservices. Both load balancers use TLS to encrypt data in transit, protecting it from
-        potential interception during transmission.
-      </p>
-      <p>
-        Additionally, all communication between backend services occurs within a private cloud environment on AWS,
-        further isolating and securing internal data exchanges. This multi-layered security approach ensures robust
-        protection for both data at rest and in transit across the entire platform.
-      </p>
-
-
-      <h2 class="section-subheading">Deployment & Monitoring</h2>
-      <div class="image-container">
-        <img src="rendered/monitoring.svg" alt="Emotorad Architecture Monitoring" />
-      </div>
-      <p>
-        Deployment for Emotorad's platform is managed using AWS Elastic Kubernetes Service (EKS), which facilitates
-        automated scaling and orchestration of containerized microservices. EKS handles the deployment of application
-        containers, scaling them up or down based on real-time traffic demands, ensuring smooth and efficient management
-        of services.
-      </p>
-      <p>
-        For logging and monitoring, MongoDB and Kafka are employed to track and analyze logs generated by the
-        application. MongoDB stores the logs, while Kafka handles the streaming of log data. A WebSocket client connects
-        to MongoDB, displaying real-time logs in a dashboard, providing detailed insights into system performance and
-        operational health. This setup ensures that the platform remains robust, with continuous monitoring and logging
-        to support effective management and troubleshooting.
-      </p>
-
-
-      <h1 class="section-heading">Implementation Details</h1>
-      <h2 class="section-subheading">Challenges Faced</h2>
-      <p>
-        A significant challenge was ensuring efficient communication between mobile devices and the backend,
-        specifically for sending data in a format that maintained consistency and integrity. To address this, I adopted
-        Protocol Buffers (protobuf) for data serialisation. Protobuf offers a compact binary format and schema
-        definition that ensured robust and efficient data exchange. Designing the appropriate protobuf schema required
-        careful consideration of data types and structures to align with the needs of both the mobile app and the
-        backend systems.
-      </p>
-      <p>
-        Maintaining stateful services on Kubernetes presented another challenge, particularly in ensuring data
-        consistency and high availability. Implementing StatefulSets with headless services and configuring persistent
-        volume claims helped manage the state across pod restarts and scaling events. This setup required meticulous
-        planning to handle stateful data effectively while ensuring that services remained resilient and performant
-        under varying loads.
-      </p>
-      <p>
-        Ensuring proper checkpointing and recovery in Apache Flink applications was crucial for handling potential
-        crashes and maintaining data integrity. I implemented checkpointing mechanisms that periodically save the state
-        of the Flink jobs, allowing for recovery and continuation from the last successful checkpoint in the event of a
-        failure. This involved configuring the Flink Kubernetes operator to manage scaling and checkpointing, ensuring
-        that the applications could recover gracefully and continue processing without significant data loss or
-        downtime.
-      </p>
-
-      <h2 class="section-subheading">Key Features</h2>
-      <ul>
-        <li>
-          <strong>Efficient Data Serialization:</strong> Used Protocol Buffers (protobuf) for compact, efficient data
-          exchange between mobile devices and the backend.
-        </li>
-        <li>
-          <strong>Stateful Service Management:</strong> Leveraged Kubernetes StatefulSets and persistent volumes for
-          data consistency and high availability.
-        </li>
-        <li>
-          <strong>Advanced Checkpointing:</strong> Configured Flink checkpointing to ensure data recovery and integrity
-          during failures.
-        </li>
-        <li>
-          <strong>Real-Time Data Processing:</strong> Developed stateful Flink applications for real-time data
-          processing with Cassandra, Redis, and Kafka.
-        </li>
-        <li>
-          <strong>Microservice Architecture:</strong> Built and maintained Go REST microservices for dashboards and the
-          Emotorad companion app.
-        </li>
-        <li>
-          <strong>Dynamic Deployment and Scaling:</strong> Used AWS EKS and Kubernetes with HPA and Flink Kubernetes
-          operator for scalable deployments.
-        </li>
-        <li>
-          <strong>Logging and Monitoring:</strong> Implemented logging with MongoDB and Kafka, and real-time log display
-          with a WebSocket client.
-        </li>
-        <li>
-          <strong>Secure Encryption:</strong> Applied TLS encryption for MQTT and REST APIs, and encryption at rest for
-          stateful services.
-        </li>
-      </ul>
-
-      <h1 class="section-heading">Testing & Deployment</h1>
-      <h2 class="section-subheading">Testing Strategies</h2>
-      <p>
-        For testing APIs, I implemented mocking through dependency injection, which allowed for isolating the APIs from
-        external services. By injecting mocked dependencies during testing, I could simulate various scenarios, ensuring
-        that the APIs were thoroughly tested without relying on external systems. This approach provided a controlled
-        testing environment, resulting in more reliable and efficient tests.
-      </p>
-      <p>
-        I developed tests for database queries using sqlc in Go. These tests were designed to validate the
-        correctness of SQL queries generated by sqlc, ensuring accurate data retrieval and manipulation. By focusing on
-        the integrity of the database interactions.
-      </p>
-
-      <h2 class="section-subheading">Deployment Automation</h2>
-      <div class="image-container">
-        <img src="rendered/deployment.svg" alt="Emotorad Deployment Automation">
-      </div>
-      <p>
-        Initially, I used a Makefile to automate the deployment process for Emotorad. The Makefile pushed Docker images
-        to AWS Elastic Container Registry (ECR) and then employed kubectl commands to pull the latest image and restart
-        the deployment on Kubernetes. To improve efficiency and streamline automation, I transitioned to GitHub Actions,
-        which integrates deployment tasks directly with the repository. Future plans include adopting Jenkins to further
-        enhance and automate the deployment pipeline.
-      </p>
     </div>
-
-    <div class="right-sidebar">
-      <h1>Tools Used</h1>
-
-      <h2 class="section-heading">Languages</h2>
-      <a href="https://go.dev/" target="_blank">Go</a>
-      <a href="https://www.java.com/en/" target="_blank">Java</a>
-      <a href="https://nodejs.org/en" target="_blank">Node.js</a>
-      <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>
-
-      <h2 class="section-heading">Stateful Services</h2>
-      <a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a>
-      <a href="https://cassandra.apache.org/_/index.html" target="_blank">Apache Cassandra</a>
-      <a href="https://redis.io/" target="_blank">Redis</a>
-      <a href="https://firebase.google.com/docs/firestore" target="_blank">Cloud Firestore</a>
-      <a href="https://www.mongodb.com/" target="_blank">MongoDB</a>
-      <a href="https://aws.amazon.com/s3/" target="_blank">AWS S3</a>
-
-      <h2 class="section-heading">Notifications</h2>
-      <a href="https://firebase.google.com/docs/cloud-messaging" target="_blank">Firebase Cloud Messaging</a>
-      <a href="https://firebase.google.com/docs/functions" target="_blank">Firebase Cloud Functions</a>
-      <a href="https://firebase.google.com/docs/firestore" target="_blank">Cloud Firestore</a>
-
-      <h2 class="section-heading">Streaming Services & Formats</h2>
-      <a href="https://kafka.apache.org/" target="_blank">Apache Kafka</a>
-      <a href="https://flink.apache.org/" target="_blank">Apache Flink</a>
-      <a href="https://www.emqx.com/en" target="_blank">EMQX MQTT</a>
-      <a href="https://parquet.apache.org/" target="_blank">Apache Parquet</a>
-      <a href="https://protobuf.dev/" target="_blank">Protocol Buffers</a>
-      <a href="https://www.json.org/json-en.html" target="_blank">JSON</a>
-
-      <h2 class="section-heading">Analytics</h2>
-      <a href="https://trino.io/" target="_blank">Trino</a>
-
-      <h2 class="section-heading">Deployment</h2>
-      <a href="https://kubernetes.io/" target="_blank">Kubernetes</a>
-      <a href="https://www.docker.com/" target="_blank">Docker</a>
-
-      <h2 class="section-heading">Amazon Web Services</h2>
-      <a href="https://aws.amazon.com/athena/" target="_blank">Athena</a>
-      <a href="https://aws.amazon.com/ecs/" target="_blank">Elastic Container Service</a>
-      <a href="https://aws.amazon.com/ecr/" target="_blank">Elastic Container Registry</a>
-      <a href="https://aws.amazon.com/eks/" target="_blank">Elastic Kubernetes Service</a>
-      <a href="https://aws.amazon.com/elasticloadbalancing/" target="_blank">Elastic Load Balancing</a>
-      <a href="https://aws.amazon.com/ec2/" target="_blank">Elastic Cloud Compute</a>
-      <a href="https://aws.amazon.com/keyspaces/" target="_blank">Keyspaces</a>
-      <a href="https://aws.amazon.com/memorydb/" target="_blank">MemoryDB</a>
-      <a href="https://aws.amazon.com/msk/" target="_blank">Managed Streaming for Apache Kafka</a>
-      <a href="https://aws.amazon.com/rds/" target="_blank">Relational Database Service</a>
-      <a href="https://aws.amazon.com/s3/" target="_blank">Simple Storage Service</a>
-    </div>
-  </div>
-</div>
-</body>
+  </body>
 </html>
