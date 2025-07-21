@@ -75,37 +75,51 @@
             This was my first time working on something that could potentially
             scale to tens of thousands of users, so I had to do it right.
             Luckily, I had some help from the backend team at Ola Electric to
-            give me pointers along the way, this was pretty much the
-            architecture set in stone from day one:
+            give me pointers along the way.
           </p>
-          <div class="image-container">
-            <a
-              href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/emotorad/rendered/initial.svg"
-            >
-              <img
-                src="rendered/initial.svg"
-                alt="Emotorad Initial Architecture"
-              />
-            </a>
-          </div>
           <p>
             There are quite a few components at work here, let's break it down.
           </p>
+          <h2>Why I Ditched WebSockets for MQTT</h2>
           <p>
-            Message passing was the core of our data collection and web sockets
-            was the initially suggested method. The issues with web sockets for
-            IoT applications were the stateful connection requirements and
-            difficult horizontal scaling. I knew that web sockets would become a
-            bottle neck quickly, plus the industry standard for IoT was
-            <a href="https://mqtt.org/">MQTT</a>
-            , which offered lower overhead and easy scaling. Even with the extra
-            infra needed for our own hosted brokers, it was worth avoiding the
-            headache of web sockets' scalability. I ended up choosing
-            <a href="https://www.emqx.com/en">EMQX</a>
-            , as they had an easy-to-use
-            <a href="https://hub.docker.com/_/emqx">Docker image</a>
-            with the cheapest enterprise edition if we needed to upgrade.
+            So initially, everyone was like "let's just use WebSockets for the
+            bike data" - which honestly makes sense on the surface since it's
+            real-time communication, right? But here's the thing: WebSockets are
+            a pain when you're dealing with thousands of IoT devices. Every
+            single bike would need to keep a constant connection open to our
+            servers, which is like having 10,000+ people all trying to have
+            individual phone conversations with you at the same time. It gets
+            messy fast, especially when you need to scale up and add more
+            servers.
           </p>
+          <p>
+            The real kicker is that WebSockets are stateful, meaning if one
+            server goes down, all the bikes connected to it lose their
+            connection and have to reconnect. Plus, if you want to add more
+            servers to handle the load, you've got to figure out how to share
+            all that connection state between them. It's doable, but it's a
+            headache you don't want to deal with.
+          </p>
+          <p>
+            MQTT is basically the gold standard for IoT stuff, and for good
+            reason. It's way more lightweight - instead of each bike maintaining
+            a heavy connection, they just send messages to a broker that handles
+            all the routing. It's like switching from everyone calling you
+            directly to having a really efficient receptionist who takes
+            messages and passes them along. The overhead is much lower, and
+            scaling is as simple as adding more brokers to the cluster.
+          </p>
+          <p>
+            I went with EMQX because they had this super clean Docker setup that
+            I could get running in like 10 minutes, and their pricing was
+            actually reasonable if we needed to upgrade to their enterprise
+            features later. Sometimes the simplest solution that gets you moving
+            quickly is the right one.
+          </p>
+          {{/*
+          <BLABLA></BLABLA>
+          */}}
+
           <p>
             <a href="https://kafka.apache.org/">Apache Kafka</a>
             was a no-brainer for handling the massive amount of message we were
