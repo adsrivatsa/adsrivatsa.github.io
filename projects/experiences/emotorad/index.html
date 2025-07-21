@@ -88,17 +88,12 @@
             a pain when you're dealing with thousands of IoT devices. Every
             single bike would need to keep a constant connection open to our
             servers, which is like having 10,000+ people all trying to have
-            individual phone conversations with you at the same time. It gets
-            messy fast, especially when you need to scale up and add more
-            servers.
-          </p>
-          <p>
-            The real kicker is that WebSockets are stateful, meaning if one
-            server goes down, all the bikes connected to it lose their
-            connection and have to reconnect. Plus, if you want to add more
-            servers to handle the load, you've got to figure out how to share
-            all that connection state between them. It's doable, but it's a
-            headache you don't want to deal with.
+            individual phone conversations with you at the same time. The real
+            kicker is that WebSockets are stateful, meaning if one server goes
+            down, all the bikes connected to it lose their connection and have
+            to reconnect. Plus, scaling horizontally means figuring out how to
+            share all that connection state between servers - it's doable, but
+            it's a headache you don't want to deal with.
           </p>
           <p>
             MQTT is basically the gold standard for IoT stuff, and for good
@@ -106,15 +101,48 @@
             a heavy connection, they just send messages to a broker that handles
             all the routing. It's like switching from everyone calling you
             directly to having a really efficient receptionist who takes
-            messages and passes them along. The overhead is much lower, and
-            scaling is as simple as adding more brokers to the cluster.
+            messages and passes them along. I went with EMQX because they had
+            this super clean Docker setup that I could get running in like 10
+            minutes, and their pricing was actually reasonable if we needed to
+            upgrade to their enterprise features later. Sometimes the simplest
+            solution that gets you moving quickly is the right one.RetryClaude
+            can make mistakes. Please double-check responses.
+          </p>
+
+          <h2 class="section-subheading">
+            Kafka - Handling the Message Firehose
+          </h2>
+          <p>
+            Honestly, Kafka was kind of a no-brainer once I saw the scale we
+            were dealing with. When you've got 10,000+ bikes constantly
+            streaming telemetry data, you need something that can handle that
+            firehose of messages without breaking a sweat. The beautiful thing
+            about Kafka is that it doesn't just ingest all that incoming data;
+            it also lets multiple systems tap into that same stream
+            simultaneously. So while our real-time dashboard is pulling the
+            latest GPS coordinates to show where bikes are right now, our
+            analytics pipeline is also reading that same data to build things
+            like route heat maps and battery usage patterns. I went with AWS MSK
+            because managing your own Kafka cluster is a headache you don't want
+            to deal with if you can avoid it - AWS handles all the
+            infrastructure stuff so we could focus on actually building
+            features.
           </p>
           <p>
-            I went with EMQX because they had this super clean Docker setup that
-            I could get running in like 10 minutes, and their pricing was
-            actually reasonable if we needed to upgrade to their enterprise
-            features later. Sometimes the simplest solution that gets you moving
-            quickly is the right one.
+            Now, here's where things got interesting with the processing side. I
+            initially thought I'd use AWS's other streaming services like
+            Kinesis and Data Firehose, but they fell short when it came to
+            stateful operations. Building real-time route maps isn't just about
+            processing individual messages - you need to remember state across
+            multiple MQTT messages from the same bike to piece together a
+            coherent route. AWS's managed services are great for simple
+            transformations, but they're not really built for that kind of
+            complex stateful processing. That's where the Kubernetes Flink
+            operator came in clutch. Instead of fighting with AWS's limitations,
+            I could deploy Flink directly on our Kubernetes cluster and get
+            exactly the stateful stream processing we needed for things like
+            aggregating GPS points into routes and calculating real-time battery
+            degradation patterns across ride sessions.
           </p>
           {{/*
           <BLABLA></BLABLA>
