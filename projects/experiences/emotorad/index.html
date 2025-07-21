@@ -143,6 +143,26 @@
             degradation patterns across ride sessions.
           </p>
           <h2 class="section-subheading">
+            Cassandra - Built for Write-Heavy Workloads
+          </h2>
+          <p>
+            I chose Apache Cassandra for storing all the aggregated trip data -
+            stuff like battery stats before and after rides, calories burned,
+            starting and ending GPS coordinates, basically all the summary
+            information that users would want to review later. The key insight
+            here was that I needed a database optimized for writes rather than
+            reads. With thousands of bikes finishing trips constantly, we'd be
+            writing way more data than we'd be reading, and occasional slower
+            read times were totally acceptable since users aren't constantly
+            refreshing their trip history. Cassandra is basically designed for
+            exactly this scenario - it can handle massive write throughput
+            without breaking a sweat. I briefly considered ScyllaDB, which is
+            supposedly faster, but Cassandra being available as a managed
+            service on AWS Keyspaces made the choice easy. Sometimes picking the
+            solution with better operational support beats chasing marginal
+            performance gains.
+          </p>
+          <h2 class="section-subheading">
             Redis - Keeping Track of the Latest Bike Data
           </h2>
           <p>
@@ -163,76 +183,117 @@
             dashboard that always shows the current readings instead of having
             to scroll through a logbook to find the most recent entry.
           </p>
-          {{/*
-          <BLABLA></BLABLA>
-          */}}
-
+          <h2 class="section-subheading">S3 - The Ultimate Backup Plan</h2>
           <p>
-            <a href="https://kafka.apache.org/">Apache Kafka</a>
-            was a no-brainer for handling the massive amount of message we were
-            expecting. Kafka coupled with
-            <a href="https://flink.apache.org/">Apache Flink</a>
-            made a powerful duo for processing the data we were ingesting and
-            for building things like route maps and battery usage in real time
-            and storing the data appropriately. Thankfully, AWS offered a simple
-            cloud service for Kafka -
-            <a href="https://aws.amazon.com/msk/">MSK</a>
-            . Though I didn't really have the same ease of use with AWS's Data
-            Firehose and Kinesis (managed Flink) for stateful services, which
-            were needed to build maps across MQTT messages, the
-            <a
-              href="https://nightlies.apache.org/flink/flink-kubernetes-operator-docs-stable/"
-            >
-              Kubernetes Flink operator
-            </a>
-            was perfect for this.
+            AWS S3 was my insurance policy for all the raw telemetry data. While
+            Redis kept the latest bike states and Cassandra stored the trip
+            summaries, S3 held onto every single data point that came through
+            our system - basically a complete audit trail that would let us
+            recreate any trip or event from scratch if something went wrong with
+            our other databases. Think of it like keeping both your important
+            documents and photocopies of everything, just in case. For older
+            data that we rarely accessed but needed to keep for compliance or
+            historical analysis, I set up automatic archiving to S3 Glacier,
+            which is way cheaper for long-term storage.
+          </p>
+          <h2 class="section-subheading">
+            Go Microservices with PostgreSQL - Breaking Down the Features
+          </h2>
+          <p>
+            Go was the perfect choice for building out all the different
+            features our companion app needed. Instead of cramming everything
+            into one massive service, I broke things down into focused
+            microservices - one handling route map generation from GPS data,
+            another managing fitness goals and calorie tracking, one serving up
+            the latest trip data from Redis, and another handling all the safety
+            features like child mode protections and geofencing alerts. For all
+            the user data and app interactions - stuff like user profiles,
+            fitness goal settings, bike ownership records, and safety
+            preferences - I used PostgreSQL since it's rock solid for
+            transactional data and complex queries. Go's lightweight nature and
+            excellent concurrency support made it ideal for these services since
+            they all needed to handle multiple requests simultaneously while
+            doing things like processing GPS coordinates, querying user
+            preferences from Postgres, or checking if a bike had wandered
+            outside its allowed area. Each service could be developed, deployed,
+            and scaled independently, which was huge when we needed to quickly
+            push updates to the geofencing logic without touching the route
+            mapping code. Plus, Go's fast startup times and small memory
+            footprint meant our Kubernetes pods could spin up quickly when
+            traffic spiked, keeping response times snappy even during peak
+            riding hours.
+          </p>
+          <h2 class="section-subheading">
+            Docker and Kubernetes - The Orchestration Dream Team
+          </h2>
+          <p>
+            Docker and Kubernetes basically saved my sanity on this project.
+            With all these moving pieces - multiple Go microservices, EMQX MQTT
+            brokers, Flink jobs for stream processing, plus all the databases
+            and caches - keeping track of everything would have been a nightmare
+            without containerization. Docker let me package each service with
+            exactly what it needed to run, so I never had to worry about "it
+            works on my machine" problems or dependency conflicts between
+            different services. Each microservice, whether it was handling route
+            maps or geofencing alerts, could be containerized with its specific
+            runtime requirements and deployed independently.
           </p>
           <p>
-            A requirement for the companion app that was being built, was for
-            each person to see their latest bicycle metrics in real time. As
-            this should work on bicycles with LTE too, where a customer's phone
-            didn't pass the message to the cloud, I used
-            <a href="https://redis.io/">Redis</a>
-            to persist the latest data from each bicycle. This was later served
-            using an API, but we'll get to those parts later.
+            But the real magic happened with Kubernetes orchestrating
+            everything. Instead of manually deploying and babysitting dozens of
+            services, Kubernetes handled service discovery, load balancing,
+            health checks, and auto-scaling automatically. When traffic spiked
+            during rush hours, it would spin up more instances of our route
+            mapping service. When an EMQX broker crashed, it would restart it
+            immediately. Even our Flink jobs for processing the telemetry
+            streams ran as Kubernetes jobs, making it super easy to manage the
+            entire data pipeline from one place.
           </p>
+          <h2 class="section-subheading">
+            Firebase - Handling Push Notifications
+          </h2>
           <p>
-            I chose
-            <a href="https://cassandra.apache.org/_/index.html">
-              Apache Cassandra
-            </a>
-            for persisting the aggregated trip data, like battery statistics
-            before and after the trip, amount of calories burned, starting and
-            ending latitude and longitude, etc. I knew I needed a write friendly
-            database where slow reading was acceptable. ScyllaDB was an
-            alternative, but was an unnecessary optimization due to Cassandra
-            being supported on
-            <a href="https://aws.amazon.com/keyspaces/">AWS Keyspaces</a>
-            .
+            For push notifications, I went with Firebase Cloud Functions paired
+            with Cloud Firestore to handle all the messaging logic. Whenever
+            users wanted to get notified about stuff like low battery warnings,
+            geofence violations, or trip summaries, we needed a reliable way to
+            reach their phones. Firebase was perfect for this because it handles
+            all the complexity of push notifications across different devices
+            and operating systems. I stored all the FCM (Firebase Cloud
+            Messaging) tokens in Cloud Firestore, which made it easy to keep
+            track of which devices belonged to which users and manage token
+            updates when users logged in on new phones or reinstalled the app.
+            The Cloud Functions would trigger based on events from our main
+            system - like when a bike's battery dropped below 20% or when
+            someone's kid rode outside their allowed area - and then grab the
+            right FCM tokens from Firestore to send targeted notifications. It's
+            way simpler than trying to manage push notification infrastructure
+            yourself, and Firebase handles all the edge cases like expired
+            tokens and delivery retries automatically.
           </p>
+          <h2 class="section-subheading">
+            AWS Athena - Analytics and Digital Twin Features
+          </h2>
           <p>
-            The final piece of this architecture is
-            <a href="https://aws.amazon.com/s3/">AWS S3</a>
-            , which stored every individual instance of data, to recreate all
-            events and trips from scratch if anything was lost or corrupted. I
-            also used
-            <a href="https://aws.amazon.com/s3/storage-classes/glacier/">
-              AWS S3 Glacier
-            </a>
-            for entries that were too old to be used on a regular basis.
+            For analytics and advanced features like our digital twin
+            implementation, AWS Athena was a game-changer. All that raw
+            telemetry data we were storing in S3 - every GPS coordinate, battery
+            reading, speed measurement, and sensor value from thousands of bikes
+            - became incredibly valuable for building insights and predictive
+            features. Athena let us run SQL queries directly against the S3 data
+            without having to move it anywhere or set up complex ETL pipelines.
+            This was perfect for building features like digital twins, where
+            we'd analyze historical patterns from a specific bike to predict
+            things like battery degradation, optimal charging times, or
+            maintenance needs. Instead of keeping all this analytical data in
+            expensive databases, we could just point Athena at our S3 buckets
+            and run queries like "show me the average battery drain rate for
+            this bike model over the last six months" or "find bikes that are
+            showing similar usage patterns to ones that needed maintenance." It
+            made implementing sophisticated analytics features way more
+            straightforward and cost-effective than traditional data warehouse
+            approaches.
           </p>
-          <p>
-            A few more components were added to arrive at the final
-            architecture:
-          </p>
-          <div class="image-container">
-            <a
-              href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/emotorad/rendered/overview.svg"
-            >
-              <img src="rendered/overview.svg" alt="Emotorad Architecture" />
-            </a>
-          </div>
-
           <h2 class="section-subheading">Scalability & Performance</h2>
           <p>
             Emotorad's backend architecture is designed for high performance and
