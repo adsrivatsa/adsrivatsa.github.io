@@ -105,10 +105,8 @@
             this super clean Docker setup that I could get running in like 10
             minutes, and their pricing was actually reasonable if we needed to
             upgrade to their enterprise features later. Sometimes the simplest
-            solution that gets you moving quickly is the right one.RetryClaude
-            can make mistakes. Please double-check responses.
+            solution that gets you moving quickly is the right one.
           </p>
-
           <h2 class="section-subheading">
             Kafka - Handling the Message Firehose
           </h2>
@@ -143,6 +141,27 @@
             exactly the stateful stream processing we needed for things like
             aggregating GPS points into routes and calculating real-time battery
             degradation patterns across ride sessions.
+          </p>
+          <h2 class="section-subheading">
+            Redis - Keeping Track of the Latest Bike Data
+          </h2>
+          <p>
+            One of the key requirements for the companion app was showing users
+            their bike's current metrics in real-time - stuff like battery
+            level, current speed, GPS location, you know, the basics. The tricky
+            part was that some of our bikes had their own LTE connections,
+            meaning they could send data directly to our servers even when the
+            rider's phone wasn't connected or acting as a relay. Redis was
+            perfect for this because it's basically a super-fast in-memory
+            database that excels at storing and retrieving the "latest" version
+            of something. Every time we got telemetry data from a bike - whether
+            through MQTT from the bike's LTE connection or through the phone app
+            - we'd update that bike's current state in Redis. Then when someone
+            opened the app and wanted to see their current battery level or
+            location, we could grab it from Redis instantly instead of having to
+            dig through all the historical data in Cassandra. It's like having a
+            dashboard that always shows the current readings instead of having
+            to scroll through a logbook to find the most recent entry.
           </p>
           {{/*
           <BLABLA></BLABLA>
