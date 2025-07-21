@@ -86,7 +86,7 @@
             bike data" - which honestly makes sense on the surface since it's
             real-time communication, right? But here's the thing: WebSockets are
             a pain when you're dealing with thousands of IoT devices. Every
-            single bike would need to keep a constant connection open to our
+            single bike would need to keep a constant connection open to my
             servers, which is like having 10,000+ people all trying to have
             individual phone conversations with you at the same time. The real
             kicker is that WebSockets are stateful, meaning if one server goes
@@ -103,7 +103,7 @@
             directly to having a really efficient receptionist who takes
             messages and passes them along. I went with EMQX because they had
             this super clean Docker setup that I could get running in like 10
-            minutes, and their pricing was actually reasonable if we needed to
+            minutes, and their pricing was actually reasonable if I needed to
             upgrade to their enterprise features later. Sometimes the simplest
             solution that gets you moving quickly is the right one.
           </p>
@@ -111,20 +111,19 @@
             Kafka - Handling the Message Firehose
           </h2>
           <p>
-            Honestly, Kafka was kind of a no-brainer once I saw the scale we
-            were dealing with. When you've got 10,000+ bikes constantly
-            streaming telemetry data, you need something that can handle that
-            firehose of messages without breaking a sweat. The beautiful thing
-            about Kafka is that it doesn't just ingest all that incoming data;
-            it also lets multiple systems tap into that same stream
-            simultaneously. So while our real-time dashboard is pulling the
-            latest GPS coordinates to show where bikes are right now, our
-            analytics pipeline is also reading that same data to build things
-            like route heat maps and battery usage patterns. I went with AWS MSK
-            because managing your own Kafka cluster is a headache you don't want
-            to deal with if you can avoid it - AWS handles all the
-            infrastructure stuff so we could focus on actually building
-            features.
+            Honestly, Kafka was kind of a no-brainer once I saw the scale I was
+            dealing with. When you've got 10,000+ bikes constantly streaming
+            telemetry data, you need something that can handle that firehose of
+            messages without breaking a sweat. The beautiful thing about Kafka
+            is that it doesn't just ingest all that incoming data; it also lets
+            multiple systems tap into that same stream simultaneously. So while
+            my real-time dashboard is pulling the latest GPS coordinates to show
+            where bikes are right now, my analytics pipeline is also reading
+            that same data to build things like route heat maps and battery
+            usage patterns. I went with AWS MSK because managing your own Kafka
+            cluster is a headache you don't want to deal with if you can avoid
+            it - AWS handles all the infrastructure stuff so I could focus on
+            actually building features.
           </p>
           <p>
             Now, here's where things got interesting with the processing side. I
@@ -137,8 +136,8 @@
             transformations, but they're not really built for that kind of
             complex stateful processing. That's where the Kubernetes Flink
             operator came in clutch. Instead of fighting with AWS's limitations,
-            I could deploy Flink directly on our Kubernetes cluster and get
-            exactly the stateful stream processing we needed for things like
+            I could deploy Flink directly on my Kubernetes cluster and get
+            exactly the stateful stream processing I needed for things like
             aggregating GPS points into routes and calculating real-time battery
             degradation patterns across ride sessions.
           </p>
@@ -151,8 +150,8 @@
             starting and ending GPS coordinates, basically all the summary
             information that users would want to review later. The key insight
             here was that I needed a database optimized for writes rather than
-            reads. With thousands of bikes finishing trips constantly, we'd be
-            writing way more data than we'd be reading, and occasional slower
+            reads. With thousands of bikes finishing trips constantly, I'd be
+            writing way more data than I'd be reading, and occasional slower
             read times were totally acceptable since users aren't constantly
             refreshing their trip history. Cassandra is basically designed for
             exactly this scenario - it can handle massive write throughput
@@ -169,16 +168,16 @@
             One of the key requirements for the companion app was showing users
             their bike's current metrics in real-time - stuff like battery
             level, current speed, GPS location, you know, the basics. The tricky
-            part was that some of our bikes had their own LTE connections,
-            meaning they could send data directly to our servers even when the
+            part was that some of my bikes had their own LTE connections,
+            meaning they could send data directly to my servers even when the
             rider's phone wasn't connected or acting as a relay. Redis was
             perfect for this because it's basically a super-fast in-memory
             database that excels at storing and retrieving the "latest" version
-            of something. Every time we got telemetry data from a bike - whether
+            of something. Every time I got telemetry data from a bike - whether
             through MQTT from the bike's LTE connection or through the phone app
-            - we'd update that bike's current state in Redis. Then when someone
+            - I'd update that bike's current state in Redis. Then when someone
             opened the app and wanted to see their current battery level or
-            location, we could grab it from Redis instantly instead of having to
+            location, I could grab it from Redis instantly instead of having to
             dig through all the historical data in Cassandra. It's like having a
             dashboard that always shows the current readings instead of having
             to scroll through a logbook to find the most recent entry.
@@ -187,21 +186,21 @@
           <p>
             AWS S3 was my insurance policy for all the raw telemetry data. While
             Redis kept the latest bike states and Cassandra stored the trip
-            summaries, S3 held onto every single data point that came through
-            our system - basically a complete audit trail that would let us
-            recreate any trip or event from scratch if something went wrong with
-            our other databases. Think of it like keeping both your important
-            documents and photocopies of everything, just in case. For older
-            data that we rarely accessed but needed to keep for compliance or
-            historical analysis, I set up automatic archiving to S3 Glacier,
-            which is way cheaper for long-term storage.
+            summaries, S3 held onto every single data point that came through my
+            system - basically a complete audit trail that would let me recreate
+            any trip or event from scratch if something went wrong with my other
+            databases. Think of it like keeping both your important documents
+            and photocopies of everything, just in case. For older data that I
+            rarely accessed but needed to keep for compliance or historical
+            analysis, I set up automatic archiving to S3 Glacier, which is way
+            cheaper for long-term storage.
           </p>
           <h2 class="section-subheading">
             Go Microservices with PostgreSQL - Breaking Down the Features
           </h2>
           <p>
             Go was the perfect choice for building out all the different
-            features our companion app needed. Instead of cramming everything
+            features the companion app needed. Instead of cramming everything
             into one massive service, I broke things down into focused
             microservices - one handling route map generation from GPS data,
             another managing fitness goals and calorie tracking, one serving up
@@ -216,10 +215,10 @@
             doing things like processing GPS coordinates, querying user
             preferences from Postgres, or checking if a bike had wandered
             outside its allowed area. Each service could be developed, deployed,
-            and scaled independently, which was huge when we needed to quickly
+            and scaled independently, which was huge when I needed to quickly
             push updates to the geofencing logic without touching the route
             mapping code. Plus, Go's fast startup times and small memory
-            footprint meant our Kubernetes pods could spin up quickly when
+            footprint meant my Kubernetes pods could spin up quickly when
             traffic spiked, keeping response times snappy even during peak
             riding hours.
           </p>
@@ -243,11 +242,11 @@
             everything. Instead of manually deploying and babysitting dozens of
             services, Kubernetes handled service discovery, load balancing,
             health checks, and auto-scaling automatically. When traffic spiked
-            during rush hours, it would spin up more instances of our route
+            during rush hours, it would spin up more instances of my route
             mapping service. When an EMQX broker crashed, it would restart it
-            immediately. Even our Flink jobs for processing the telemetry
-            streams ran as Kubernetes jobs, making it super easy to manage the
-            entire data pipeline from one place.
+            immediately. Even my Flink jobs for processing the telemetry streams
+            ran as Kubernetes jobs, making it super easy to manage the entire
+            data pipeline from one place.
           </p>
           <h2 class="section-subheading">
             Firebase - Handling Push Notifications
@@ -256,14 +255,14 @@
             For push notifications, I went with Firebase Cloud Functions paired
             with Cloud Firestore to handle all the messaging logic. Whenever
             users wanted to get notified about stuff like low battery warnings,
-            geofence violations, or trip summaries, we needed a reliable way to
+            geofence violations, or trip summaries, I needed a reliable way to
             reach their phones. Firebase was perfect for this because it handles
             all the complexity of push notifications across different devices
             and operating systems. I stored all the FCM (Firebase Cloud
             Messaging) tokens in Cloud Firestore, which made it easy to keep
             track of which devices belonged to which users and manage token
             updates when users logged in on new phones or reinstalled the app.
-            The Cloud Functions would trigger based on events from our main
+            The Cloud Functions would trigger based on events from my main
             system - like when a bike's battery dropped below 20% or when
             someone's kid rode outside their allowed area - and then grab the
             right FCM tokens from Firestore to send targeted notifications. It's
@@ -275,22 +274,22 @@
             AWS Athena - Analytics and Digital Twin Features
           </h2>
           <p>
-            For analytics and advanced features like our digital twin
+            For analytics and advanced features like my digital twin
             implementation, AWS Athena was a game-changer. All that raw
-            telemetry data we were storing in S3 - every GPS coordinate, battery
+            telemetry data I was storing in S3 - every GPS coordinate, battery
             reading, speed measurement, and sensor value from thousands of bikes
             - became incredibly valuable for building insights and predictive
-            features. Athena let us run SQL queries directly against the S3 data
+            features. Athena let me run SQL queries directly against the S3 data
             without having to move it anywhere or set up complex ETL pipelines.
-            This was perfect for building features like digital twins, where
-            we'd analyze historical patterns from a specific bike to predict
-            things like battery degradation, optimal charging times, or
-            maintenance needs. Instead of keeping all this analytical data in
-            expensive databases, we could just point Athena at our S3 buckets
-            and run queries like "show me the average battery drain rate for
-            this bike model over the last six months" or "find bikes that are
-            showing similar usage patterns to ones that needed maintenance." It
-            made implementing sophisticated analytics features way more
+            This was perfect for building features like digital twins, where I'd
+            analyze historical patterns from a specific bike to predict things
+            like battery degradation, optimal charging times, or maintenance
+            needs. Instead of keeping all this analytical data in expensive
+            databases, I could just point Athena at my S3 buckets and run
+            queries like "show me the average battery drain rate for this bike
+            model over the last six months" or "find bikes that are showing
+            similar usage patterns to ones that needed maintenance." It made
+            implementing sophisticated analytics features way more
             straightforward and cost-effective than traditional data warehouse
             approaches.
           </p>
@@ -345,26 +344,29 @@
             />
           </div>
           <p>
-            The security of Emotorad's platform is a top priority, with multiple
-            layers of protection in place to safeguard data and communications.
-            All data stored in PostgreSQL, Cassandra, Redis, and Amazon S3 is
-            encrypted at rest, ensuring that sensitive information remains
-            secure from unauthorized access.
+            Security was built into every layer of Emotorad's platform from the
+            ground up. All data stored across my databases - PostgreSQL,
+            Cassandra, Redis, and S3 - is encrypted at rest, so even if someone
+            somehow got physical access to the storage, they'd just see
+            gibberish. I also implemented two separate load balancers with TLS
+            encryption: one specifically for EMQX to secure all the MQTT
+            communication between the bikes and my servers, and another for my
+            REST APIs to protect data flowing between microservices and the
+            mobile app. This meant that whether a bike was sending telemetry
+            data or a user was checking their trip history, everything was
+            encrypted in transit.
           </p>
           <p>
-            The platform employs two load balancers: one dedicated to EMQX for
-            MQTT protocol encryption, securing the communication between IoT
-            devices and the backend, and another for REST API encryption,
-            ensuring secure data transmission between microservices. Both load
-            balancers use TLS to encrypt data in transit, protecting it from
-            potential interception during transmission.
-          </p>
-          <p>
-            Additionally, all communication between backend services occurs
-            within a private cloud environment on AWS, further isolating and
-            securing internal data exchanges. This multi-layered security
-            approach ensures robust protection for both data at rest and in
-            transit across the entire platform.
+            The real security win was keeping all my backend services within
+            AWS's private cloud environment. Instead of services talking to each
+            other over the public internet, everything stayed within my private
+            network, adding an extra layer of isolation. Combined with
+            Kubernetes network policies that controlled which services could
+            communicate with each other, I created a pretty robust security
+            perimeter. It's like having multiple locked doors between the
+            outside world and your sensitive data - even if someone got through
+            one layer, they'd still have several more to deal with before
+            reaching anything important.
           </p>
 
           <h2 class="section-subheading">Deployment & Monitoring</h2>
@@ -375,56 +377,71 @@
             />
           </div>
           <p>
-            Deployment for Emotorad's platform is managed using AWS Elastic
-            Kubernetes Service (EKS), which facilitates automated scaling and
-            orchestration of containerized microservices. EKS handles the
-            deployment of application containers, scaling them up or down based
-            on real-time traffic demands, ensuring smooth and efficient
-            management of services.
+            Deployment was handled through AWS EKS (Elastic Kubernetes Service),
+            which made managing my containerized microservices way less painful
+            than doing it manually. EKS automatically scaled my services up and
+            down based on real-time traffic - so when everyone was checking
+            their bikes during morning rush hour, it would spin up more API
+            instances, and then scale back down during quiet periods. This kept
+            costs reasonable while ensuring users never hit slow response times
+            during peak usage.
           </p>
           <p>
-            For logging and monitoring, MongoDB and Kafka are employed to track
-            and analyze logs generated by the application. MongoDB stores the
-            logs, while Kafka handles the streaming of log data. A WebSocket
-            client connects to MongoDB, displaying real-time logs in a
-            dashboard, providing detailed insights into system performance and
-            operational health. This setup ensures that the platform remains
-            robust, with continuous monitoring and logging to support effective
-            management and troubleshooting.
+            For monitoring and logging, I built a custom solution using my
+            existing infrastructure. All application logs flowed through Kafka
+            (since I already had it handling telemetry data), and then got
+            stored in MongoDB for easy querying and analysis. The cool part was
+            the real-time dashboard - a WebSocket client connected directly to
+            MongoDB to stream live logs, so I could watch system health and
+            catch issues as they happened. This setup gave me detailed insights
+            into performance bottlenecks, error patterns, and operational health
+            without having to add another expensive monitoring service.
+            Sometimes the best solution is just leveraging what you already have
+            in a creative way.
           </p>
 
           <h1 class="section-heading">Implementation Details</h1>
           <h2 class="section-subheading">Challenges Faced</h2>
           <p>
-            A significant challenge was ensuring efficient communication between
-            mobile devices and the backend, specifically for sending data in a
-            format that maintained consistency and integrity. To address this, I
-            adopted Protocol Buffers (protobuf) for data serialisation. Protobuf
-            offers a compact binary format and schema definition that ensured
-            robust and efficient data exchange. Designing the appropriate
-            protobuf schema required careful consideration of data types and
-            structures to align with the needs of both the mobile app and the
-            backend systems.
+            Getting efficient communication between thousands of bikes and my
+            backend was trickier than expected. JSON was way too verbose for the
+            constant stream of telemetry data I was dealing with, so I switched
+            to Protocol Buffers for data serialization. Protobuf's compact
+            binary format significantly reduced bandwidth usage - crucial when
+            bikes were on cellular connections with limited data plans. The
+            schema definition also gave me strong typing and backward
+            compatibility, so I could evolve my data structures without breaking
+            existing bikes in the field. Designing the protobuf schemas required
+            balancing between keeping messages small while ensuring I captured
+            all the necessary telemetry data like GPS coordinates, battery
+            levels, and sensor readings.
           </p>
           <p>
-            Maintaining stateful services on Kubernetes presented another
-            challenge, particularly in ensuring data consistency and high
-            availability. Implementing StatefulSets with headless services and
-            configuring persistent volume claims helped manage the state across
-            pod restarts and scaling events. This setup required meticulous
-            planning to handle stateful data effectively while ensuring that
-            services remained resilient and performant under varying loads.
+            Managing stateful services on Kubernetes was another headache,
+            especially for my EMQX brokers and databases that needed to maintain
+            state across restarts. I had to implement StatefulSets with
+            persistent volume claims to ensure that when pods crashed or got
+            rescheduled, they could pick up exactly where they left off. This
+            was particularly important for services that held critical state
+            like MQTT broker subscriptions or cached data. Getting the
+            persistent storage configuration right took some experimentation,
+            but eventually I had a setup where services could survive pod
+            failures and cluster maintenance without losing important state or
+            causing service disruptions.
           </p>
           <p>
-            Ensuring proper checkpointing and recovery in Apache Flink
-            applications was crucial for handling potential crashes and
-            maintaining data integrity. I implemented checkpointing mechanisms
-            that periodically save the state of the Flink jobs, allowing for
-            recovery and continuation from the last successful checkpoint in the
-            event of a failure. This involved configuring the Flink Kubernetes
-            operator to manage scaling and checkpointing, ensuring that the
-            applications could recover gracefully and continue processing
-            without significant data loss or downtime.
+            Ensuring proper checkpointing and recovery in Apache Flink was
+            crucial for maintaining data integrity in my stream processing jobs.
+            Flink jobs were calculating real-time analytics like trip summaries
+            and battery usage patterns, so losing state would mean losing track
+            of ongoing calculations. I implemented checkpointing mechanisms that
+            periodically saved the state of Flink jobs to persistent storage,
+            allowing them to recover and continue from the last successful
+            checkpoint after failures. Getting the checkpointing intervals and
+            recovery strategies right required fine-tuning based on my specific
+            workload patterns - too frequent and it would impact performance,
+            too infrequent and I'd risk losing too much progress during
+            failures.
           </p>
 
           <h2 class="section-subheading">Key Features</h2>
