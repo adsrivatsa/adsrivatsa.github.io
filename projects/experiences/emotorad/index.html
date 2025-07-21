@@ -31,7 +31,7 @@
         </div>
 
         <div class="project-content">
-          <h1 class="section-heading">Project Overview</h1>
+          <h1 class="section-heading">Overview</h1>
           <h2 class="section-subheading">Company Name</h2>
           <p>Emotorad</p>
 
@@ -41,7 +41,7 @@
           <h2 class="section-subheading">Role</h2>
           <p>Cloud and Backend Intern and Consultant</p>
 
-          <h2 class="section-subheading">Project Description</h2>
+          <h2 class="section-subheading">TLDR</h2>
           <p>
             At Emotorad, I led the design and development of a scalable backend
             architecture for real-time electric bike data ingestion, utilizing
@@ -61,56 +61,116 @@
             <a
               href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/emotorad/rendered/overview.svg"
             >
+              <img src="rendered/overview.svg" alt="Emotorad Architecture" />
+            </a>
+          </div>
+          <p>
+            The problem statement was simple. Ingest all the data from each
+            bicycle that I possibly could and store it for later usage. Usage
+            for the data was given in additional feature requests, but that was
+            simple enough once I was able to collect and store the data
+            effectively.
+          </p>
+          <p>
+            This was my first time working on something that could potentially
+            scale to tens of thousands of users, so I had to do it right.
+            Luckily, I had some help from the backend team at Ola Electric to
+            give me pointers along the way, this was pretty much the
+            architecture set in stone from day one:
+          </p>
+          <div class="image-container">
+            <a
+              href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/emotorad/rendered/initial.svg"
+            >
               <img
-                src="rendered/overview.svg"
-                alt="Emotorad Architecture Overview"
+                src="rendered/initial.svg"
+                alt="Emotorad Initial Architecture"
               />
             </a>
           </div>
           <p>
-            The backend architecture for Emotorad was designed with a strong
-            focus on scalability and real-time data processing to handle the
-            ingestion of electric bike data. PostgreSQL was employed to manage
-            stateful services across various microservices, ensuring reliable
-            and consistent data handling.
+            There are quite a few components at work here, let's break it down.
           </p>
           <p>
-            To enhance security and access control, the system used PASETO
-            tokens with asymmetric keys for authenticating multiple services.
-            This approach ensured secure communication and robust authentication
-            across the platform.
+            Message passing was the core of our data collection and web sockets
+            was the initially suggested method. The issues with web sockets for
+            IoT applications were the stateful connection requirements and
+            difficult horizontal scaling. I knew that web sockets would become a
+            bottle neck quickly, plus the industry standard for IoT was
+            <a href="https://mqtt.org/">MQTT</a>
+            , which offered lower overhead and easy scaling. Even with the extra
+            infra needed for our own hosted brokers, it was worth avoiding the
+            headache of web sockets' scalability. I ended up choosing
+            <a href="https://www.emqx.com/en">EMQX</a>
+            , as they had an easy-to-use
+            <a href="https://hub.docker.com/_/emqx">Docker image</a>
+            with the cheapest enterprise edition if we needed to upgrade.
           </p>
           <p>
-            Real-time data processing was a key aspect of the architecture, with
-            stateful Apache Flink applications developed to perform map, reduce,
-            and filter operations. These applications worked in tandem with
-            Cassandra, Redis, and Kafka as data sinks, allowing for efficient
-            data aggregation and processing.
+            <a href="https://kafka.apache.org/">Apache Kafka</a>
+            was a no-brainer for handling the massive amount of message we were
+            expecting. Kafka coupled with
+            <a href="https://flink.apache.org/">Apache Flink</a>
+            made a powerful duo for processing the data we were ingesting and
+            for building things like route maps and battery usage in real time
+            and storing the data appropriately. Thankfully, AWS offered a simple
+            cloud service for Kafka -
+            <a href="https://aws.amazon.com/msk/">MSK</a>
+            . Though I didn't really have the same ease of use with AWS's Data
+            Firehose and Kinesis (managed Flink) for stateful services, which
+            were needed to build maps across MQTT messages, the
+            <a
+              href="https://nightlies.apache.org/flink/flink-kubernetes-operator-docs-stable/"
+            >
+              Kubernetes Flink operator
+            </a>
+            was perfect for this.
           </p>
           <p>
-            The architecture also included Go-based REST microservices, which
-            served as the backbone for both the Emotorad dashboards and the
-            companion app. These microservices provided a seamless and
-            responsive user experience, facilitating real-time interaction with
-            the system.
+            A requirement for the companion app that was being built, was for
+            each person to see their latest bicycle metrics in real time. As
+            this should work on bicycles with LTE too, where a customer's phone
+            didn't pass the message to the cloud, I used
+            <a href="https://redis.io/">Redis</a>
+            to persist the latest data from each bicycle. This was later served
+            using an API, but we'll get to those parts later.
           </p>
           <p>
-            Deployment was managed using Amazon Web Services (AWS) and
-            Kubernetes, allowing for scalable and resilient infrastructure. This
-            setup ensured that the system could handle varying loads and
-            maintain high availability.
+            I chose
+            <a href="https://cassandra.apache.org/_/index.html">
+              Apache Cassandra
+            </a>
+            for persisting the aggregated trip data, like battery statistics
+            before and after the trip, amount of calories burned, starting and
+            ending latitude and longitude, etc. I knew I needed a write friendly
+            database where slow reading was acceptable. ScyllaDB was an
+            alternative, but was an unnecessary optimization due to Cassandra
+            being supported on
+            <a href="https://aws.amazon.com/keyspaces/">AWS Keyspaces</a>
+            .
           </p>
           <p>
-            To support data storage and analysis, a data lake was maintained on
-            AWS S3, with Presto used for executing queries. This enabled
-            efficient data retrieval and analysis, supporting the platform's
-            real-time processing needs.
+            The final piece of this architecture is
+            <a href="https://aws.amazon.com/s3/">AWS S3</a>
+            , which stored every individual instance of data, to recreate all
+            events and trips from scratch if anything was lost or corrupted. I
+            also used
+            <a href="https://aws.amazon.com/s3/storage-classes/glacier/">
+              AWS S3 Glacier
+            </a>
+            for entries that were too old to be used on a regular basis.
           </p>
           <p>
-            Firebase cloud functions were deployed to manage push notifications,
-            ensuring timely and reliable communication with users across the
-            platform.
+            A few more components were added to arrive at the final
+            architecture:
           </p>
+          <div class="image-container">
+            <a
+              href="http://papaya147.github.io/image-viewer?img=https://papaya147.github.io/projects/experiences/emotorad/rendered/overview.svg"
+            >
+              <img src="rendered/overview.svg" alt="Emotorad Architecture" />
+            </a>
+          </div>
 
           <h2 class="section-subheading">Scalability & Performance</h2>
           <p>
