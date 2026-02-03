@@ -1,24 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Abhinav's Portfolio</title>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-  <link rel="stylesheet" href="index.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-<div class="navbar">
-  <a href="./" class="active">Home</a>
-  <a href="/projects">Projects</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
-</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abhinav Srivatsa</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👾</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #0a0a0a;
+        --card-bg: #111111;
+        --text-main: #e0e0e0;
+        --text-muted: #888888;
+        --accent-green: #4caf50;
+        --terminal-green: #39ff14;
+        --terminal-green-dim: #2dd312;
+        --border-color: #333333;
+        --font-mono: "JetBrains Mono", monospace;
+        --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
+      }
 
-<div class="content">
-  <h1>Welcome to My Portfolio</h1>
-  <p>Still under construction, but you can view the <a href="projects">projects<a></a> page!</p>
-</div>
-</body>
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        font-family: var(--font-sans);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+
+      /* The "Flashy" Container */
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* Typography */
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-mono);
+        font-weight: bold;
+      }
+
+      .hero {
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 40px;
+        margin-bottom: 40px;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        background: linear-gradient(
+          90deg,
+          var(--terminal-green),
+          var(--terminal-green-dim)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+      }
+
+      .hero p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+      }
+
+      /* Sections */
+      .section-title {
+        color: var(--terminal-green);
+        border-left: 3px solid var(--terminal-green-dim);
+        padding-left: 15px;
+        margin-top: 60px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Cards (Experience & Projects) */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-left: 3px solid var(--terminal-green);
+        padding: 20px;
+        border-radius: 8px;
+        transition: transform 0.2s, border-color 0.2s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--terminal-green);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .card h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #fff;
+      }
+      .role {
+        color: var(--terminal-green);
+        font-size: 0.9rem;
+        font-family: var(--font-mono);
+      }
+      .date {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+      .tech-stack {
+        font-size: 0.8rem;
+        color: var(--terminal-green);
+        margin-bottom: 15px;
+      }
+      .card-footer {
+        margin-top: 15px;
+        font-size: 0.75rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 10px;
+        color: var(--text-muted);
+      }
+
+      /* Links Bar */
+      .links {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .btn {
+        text-decoration: none;
+        color: var(--bg-color);
+        background-color: var(--text-main);
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-family: var(--font-mono);
+        transition: opacity 0.2s;
+      }
+
+      .btn:hover {
+        opacity: 0.8;
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: var(--text-main);
+        border: 1px solid var(--text-main);
+      }
+
+      /* Specific text tweaking for Research */
+      .research-item {
+        border-left: 1px solid var(--accent-green);
+        padding-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      /* The Scrollable Book Terminal */
+      .terminal-window {
+        background-color: #000;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 0;
+        font-family: var(--font-mono);
+        margin-top: 20px;
+      }
+
+      .terminal-header {
+        background-color: #0d1f0d;
+        border-bottom: 1px solid var(--terminal-green-dim);
+        padding: 8px 15px;
+        font-size: 0.8rem;
+        color: #7fff7f;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .terminal-body {
+        height: 200px; /* Fixed height! This prevents the page from getting too long */
+        overflow-y: auto; /* Adds the scrollbar */
+        padding: 15px;
+        font-size: 0.9rem;
+        background-color: #000;
+      }
+
+      /* Custom Scrollbar for that "Hacker" feel */
+      .terminal-body::-webkit-scrollbar {
+        width: 8px;
+      }
+      .terminal-body::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      .terminal-body::-webkit-scrollbar-thumb {
+        background: var(--terminal-green-dim);
+        border-radius: 4px;
+      }
+      .terminal-body::-webkit-scrollbar-thumb:hover {
+        background: var(--terminal-green);
+      }
+
+      .book-entry {
+        margin-bottom: 8px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .book-status {
+        color: #39ff14;
+        font-weight: bold;
+      } /* [READ] */
+      .book-reading {
+        color: #ffb000;
+        font-weight: bold;
+      } /* [READING] - terminal amber */
+      .book-title {
+        color: #e8ffe8;
+        font-weight: bold;
+      }
+      .book-author {
+        color: #6b8e6b;
+        font-style: italic;
+      }
+
+      /* Genre Tags - brighter terminal palette */
+      .tag-scifi {
+        color: #ffeb3b;
+      } /* Bright yellow */
+      .tag-fantasy {
+        color: #ff5252;
+      } /* Bright red */
+      .tag-classic {
+        color: #69f0ae;
+      } /* Bright green */
+      .tag-other {
+        color: #40c4ff;
+      } /* Bright cyan */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="hero">
+        <h1>Abhinav Srivatsa</h1>
+        <p>> Building</p>
+        <div class="links">
+          <a
+            href="https://linkedin.com/in/adsrivatsa"
+            class="btn btn-outline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/adsrivatsa"
+            class="btn btn-outline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+          <a
+            href="mailto:adsrivat@usc.edu"
+            class="btn btn-outline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Email
+          </a>
+        </div>
+      </div>
+
+      <h2 class="section-title">01_Experience</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Lira Lab (USC)</h3>
+            <span class="role">Grad. Student Researcher</span>
+          </div>
+
+          <div class="tech-stack">
+            PyTorch • Vision Transformers (ViViT) • Imitation Learning
+          </div>
+
+          <p>
+            Extending the GABRIL framework (Gaze-Based Regularization) to web
+            agents by engineering a custom Video Vision Transformer (ViViT).
+            Currently training on high-dimensional Atari datasets to prove that
+            gaze-augmented attention mechanisms improve sample efficiency in
+            complex tasks.
+          </p>
+
+          <div class="card-footer date">Aug 2024 - Present</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>BlackRock</h3>
+            <span class="role">SWE Intern (Risk & Quant.)</span>
+          </div>
+
+          <div class="tech-stack">
+            Python • SQL • Quantitative Analysis • Git
+          </div>
+
+          <p>
+            Engineered Python pipelines for critical portfolio risk metric
+            calculations. Optimized complex SQL queries on 4M+ record datasets,
+            reducing execution latency by 15% for daily executive reporting.
+            Modernized legacy infrastructure by migrating embedded queries to a
+            version-controlled Git workflow.
+          </p>
+
+          <div class="card-footer date">Jan 2025 - June 2025</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Emotorad</h3>
+            <span class="role">Cloud & Backend Eng. Intern</span>
+          </div>
+
+          <div class="tech-stack">
+            Go • Kafka • Flink • Kubernetes • Cassandra • MQTT
+          </div>
+
+          <p>
+            Architected a real-time IoT ingestion pipeline for 10,000+ e-bikes
+            (80GB/day). Replaced WebSockets with MQTT and Kafka to handle
+            high-concurrency streams. Implemented stateful processing with
+            Apache Flink and reduced bandwidth usage by 60% using Protocol
+            Buffers.
+          </p>
+
+          <div class="card-footer date">Aug 2023 - Mar 2024</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">02_Projects</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Catan Infrastructure</h3>
+            <a
+              href="https://catan.adsrivatsa.com"
+              class="btn btn-outline"
+              style="padding: 2px 10px; font-size: 0.7rem"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link
+            </a>
+          </div>
+          <div class="tech-stack">Docker • Cloudflare • Mongo • Go</div>
+          <p>
+            Orchestrated a secure, self-hosted multiplayer platform. Integrated
+            custom game assets into a modified open-source frontend, resolving
+            dependency conflicts to ensure a seamless UI experience. Secured
+            public access via Cloudflare Zero Trust tunnels (no open ports).
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <h3 style="margin: 0">Chess Bot</h3>
+              <span
+                style="
+                  font-size: 0.7rem;
+                  background: #fff;
+                  color: #000;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  font-weight: bold;
+                  line-height: 1.2;
+                "
+              >
+                RE-ENGINEERING
+              </span>
+            </div>
+            <a
+              href="https://github.com/adsrivatsa/chess-bot"
+              class="btn btn-outline"
+              style="padding: 2px 10px; font-size: 0.7rem"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link
+            </a>
+          </div>
+          <div class="tech-stack">
+            PyTorch • MCTS • Deep Reinforcement Learning
+          </div>
+          <p>
+            Reproduced the AlphaZero architecture from scratch. Engineered a
+            dual-headed Convolutional Neural Network (CNN) in PyTorch to predict
+            policy and value, integrated with Monte Carlo Tree Search (MCTS) for
+            lookahead.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Wynter's Dreams</h3>
+            <a
+              href="https://wyntersdreams.com"
+              class="btn btn-outline"
+              style="padding: 2px 10px; font-size: 0.7rem"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link
+            </a>
+          </div>
+          <div class="tech-stack">
+            Go • AWS ECS + Lightsail • PostgreSQL • CI/CD
+          </div>
+          <p>
+            Architected a cloud-native content platform using Go and PostgreSQL.
+            Orchestrated containerized microservices on AWS ECS and managed the
+            full CI/CD lifecycle to support production traffic for 50+ active
+            users.
+          </p>
+        </div>
+      </div>
+
+      <h2 class="section-title">03_Published_Research</h2>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>LSTM-Based Market "Hype Detector"</h3>
+          <a
+            href="https://thegrenze.com/index.php?display=page&view=journalabstract&absid=4346&id=8"
+            class="btn btn-outline"
+            style="padding: 2px 10px; font-size: 0.7rem"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LINK
+          </a>
+        </div>
+
+        <div class="tech-stack">
+          TensorFlow (LSTM) • Go (Colly) • yfinance • Python
+        </div>
+
+        <p>
+          Engineered a polyglot data pipeline to predict stock volatility. Built
+          a high-concurrency web scraper in Go (Colly) to harvest news
+          sentiment, fused with market data via yfinance, and trained a
+          TensorFlow LSTM model to detect market hype trends.
+        </p>
+
+        <div class="card-footer">
+          <span>Published in Grenze Int. Journal (GIJET) under title:</span>
+          <br />
+          <em>
+            "A Hype Detector based on LSTM, Stock Prices from Market Sentiment
+            and Technical Indicators"
+          </em>
+        </div>
+      </div>
+
+      <h2 class="section-title">04_Library</h2>
+
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <span>user@adsrivatsa:~ cat /library/reading_list.txt</span>
+          <span>Total_Entries: 42</span>
+        </div>
+        <div class="terminal-body">
+          <div class="book-entry">
+            <span class="tag-scifi">[SCI-FI]</span>
+            <span class="book-title">The Three-Body Problem</span>
+            <span class="book-author">// Cixin Liu</span>
+          </div>
+
+          <div class="book-entry">
+            <span class="tag-fantasy">[FANTASY]</span>
+            <span class="book-title">The Name of the Wind</span>
+            <span class="book-author">// Patrick Rothfuss</span>
+          </div>
+
+          <div class="book-entry">
+            <span class="tag-scifi">[SCI-FI]</span>
+            <span class="book-title">Project Hail Mary</span>
+            <span class="book-author">// Andy Weir</span>
+          </div>
+
+          <div class="book-entry">
+            <span class="tag-classic">[CLASSIC]</span>
+            <span class="book-title">1984</span>
+            <span class="book-author">// George Orwell</span>
+          </div>
+
+          <div class="book-entry">
+            <span class="tag-other">[FICTION]</span>
+            <span class="book-title">The Midnight Library</span>
+            <span class="book-author">// Matt Haig</span>
+          </div>
+
+          <div class="book-entry">
+            <span
+              style="color: var(--accent-purple); animation: blink 1s infinite"
+            >
+              [LOADING...]
+            </span>
+            <span class="book-title">
+              Designing Data-Intensive Applications
+            </span>
+            <span class="book-author">// Kleppmann</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
