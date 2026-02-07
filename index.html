@@ -113,6 +113,8 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         transition: box-shadow 0.2s ease;
         border-top: 3px solid var(--accent);
+        display: flex;
+        flex-direction: column;
       }
 
       .card:hover {
@@ -166,11 +168,16 @@
       }
 
       .card-footer {
-        margin-top: 16px;
+        margin-top: auto;
+        padding-top: 16px;
         font-size: 0.75rem;
         border-top: 1px solid var(--border-color);
-        padding-top: 12px;
         color: var(--text-muted);
+      }
+
+      .card-actions {
+        margin-top: auto;
+        padding-top: 16px;
       }
 
       .links {
@@ -426,15 +433,6 @@
         <div class="card">
           <div class="card-header">
             <h3>Catan Infrastructure</h3>
-            <a
-              href="https://catan.adsrivatsa.com"
-              class="btn btn-outline"
-              style="padding: 2px 10px; font-size: 0.7rem"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link
-            </a>
           </div>
           <div class="tech-stack">Docker • Cloudflare • Mongo • Go</div>
           <p>
@@ -443,6 +441,17 @@
             dependency conflicts to ensure a seamless UI experience. Secured
             public access via Cloudflare Zero Trust tunnels (no open ports).
           </p>
+          <div class="card-actions">
+            <a
+              href="https://catan.adsrivatsa.com"
+              class="btn btn-outline"
+              style="padding: 4px 14px; font-size: 0.7rem"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link
+            </a>
+          </div>
         </div>
 
         <div class="card">
@@ -464,15 +473,6 @@
                 RE-ENGINEERING
               </span>
             </div>
-            <a
-              href="https://github.com/adsrivatsa/chess-bot"
-              class="btn btn-outline"
-              style="padding: 2px 10px; font-size: 0.7rem"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link
-            </a>
           </div>
           <div class="tech-stack">
             PyTorch • MCTS • Deep Reinforcement Learning
@@ -483,20 +483,22 @@
             policy and value, integrated with Monte Carlo Tree Search (MCTS) for
             lookahead.
           </p>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <h3>Wynter's Dreams</h3>
+          <div class="card-actions">
             <a
-              href="https://wyntersdreams.com"
+              href="https://github.com/adsrivatsa/chess-bot"
               class="btn btn-outline"
-              style="padding: 2px 10px; font-size: 0.7rem"
+              style="padding: 4px 14px; font-size: 0.7rem"
               target="_blank"
               rel="noopener noreferrer"
             >
               Link
             </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Wynter's Dreams</h3>
           </div>
           <div class="tech-stack">
             Go • AWS ECS + Lightsail • PostgreSQL • CI/CD
@@ -507,6 +509,17 @@
             full CI/CD lifecycle to support production traffic for 50+ active
             users.
           </p>
+          <div class="card-actions">
+            <a
+              href="https://wyntersdreams.com"
+              class="btn btn-outline"
+              style="padding: 4px 14px; font-size: 0.7rem"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link
+            </a>
+          </div>
         </div>
       </div>
 
