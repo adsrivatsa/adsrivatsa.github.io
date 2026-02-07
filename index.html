@@ -117,8 +117,6 @@
         flex-direction: column;
       }
 
-      .card:hover {
-      }
 
       .card-header {
         display: flex;
@@ -175,9 +173,14 @@
         color: var(--text-muted);
       }
 
-      .card-actions {
-        margin-top: auto;
-        padding-top: 16px;
+      a.card {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      a.card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
       }
 
       .links {
@@ -220,18 +223,6 @@
         border-color: var(--accent);
       }
 
-      /* Button style for cards (dark text on light bg) */
-      .card .btn-outline {
-        background: transparent;
-        color: var(--navy);
-        border: 1px solid var(--border-color);
-      }
-
-      .card .btn-outline:hover {
-        background: var(--accent);
-        color: #ffffff;
-        border-color: var(--accent);
-      }
 
       .research-item {
         border-left: 3px solid var(--accent);
@@ -430,7 +421,7 @@
 
       <h2 class="section-title">02_Projects</h2>
       <div class="grid">
-        <div class="card">
+        <a class="card" href="https://catan.adsrivatsa.com" target="_blank" rel="noopener noreferrer">
           <div class="card-header">
             <h3>Catan Infrastructure</h3>
           </div>
@@ -441,20 +432,9 @@
             dependency conflicts to ensure a seamless UI experience. Secured
             public access via Cloudflare Zero Trust tunnels (no open ports).
           </p>
-          <div class="card-actions">
-            <a
-              href="https://catan.adsrivatsa.com"
-              class="btn btn-outline"
-              style="padding: 4px 14px; font-size: 0.7rem"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link
-            </a>
-          </div>
-        </div>
+        </a>
 
-        <div class="card">
+        <a class="card" href="https://github.com/adsrivatsa/chess-bot" target="_blank" rel="noopener noreferrer">
           <div class="card-header">
             <div style="display: flex; align-items: center; gap: 10px">
               <h3 style="margin: 0">Chess Bot</h3>
@@ -483,20 +463,9 @@
             policy and value, integrated with Monte Carlo Tree Search (MCTS) for
             lookahead.
           </p>
-          <div class="card-actions">
-            <a
-              href="https://github.com/adsrivatsa/chess-bot"
-              class="btn btn-outline"
-              style="padding: 4px 14px; font-size: 0.7rem"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link
-            </a>
-          </div>
-        </div>
+        </a>
 
-        <div class="card">
+        <a class="card" href="https://wyntersdreams.com" target="_blank" rel="noopener noreferrer">
           <div class="card-header">
             <h3>Wynter's Dreams</h3>
           </div>
@@ -509,34 +478,14 @@
             full CI/CD lifecycle to support production traffic for 50+ active
             users.
           </p>
-          <div class="card-actions">
-            <a
-              href="https://wyntersdreams.com"
-              class="btn btn-outline"
-              style="padding: 4px 14px; font-size: 0.7rem"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link
-            </a>
-          </div>
-        </div>
+        </a>
       </div>
 
       <h2 class="section-title">03_Published_Research</h2>
 
-      <div class="card">
+      <a class="card" href="https://thegrenze.com/index.php?display=page&view=journalabstract&absid=4346&id=8" target="_blank" rel="noopener noreferrer">
         <div class="card-header">
           <h3>LSTM-Based Market "Hype Detector"</h3>
-          <a
-            href="https://thegrenze.com/index.php?display=page&view=journalabstract&absid=4346&id=8"
-            class="btn btn-outline"
-            style="padding: 2px 10px; font-size: 0.7rem"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LINK
-          </a>
         </div>
 
         <div class="tech-stack">
@@ -558,7 +507,7 @@
             and Technical Indicators"
           </em>
         </div>
-      </div>
+      </a>
 
       <h2 class="section-title">04_Library</h2>
 
