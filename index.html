@@ -313,6 +313,11 @@
         font-weight: 700;
       }
 
+      /* GSAP initial state — prevents flash before animation */
+      .gs-reveal {
+        visibility: hidden;
+      }
+
       @keyframes blink {
         50% {
           opacity: 0.5;
@@ -322,7 +327,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="hero">
+      <div class="hero gs-reveal">
         <h1>Abhinav Srivatsa</h1>
         <p>> Building</p>
         <div class="links">
@@ -353,9 +358,9 @@
         </div>
       </div>
 
-      <h2 class="section-title">01_Experience</h2>
-      <div class="grid">
-        <div class="card">
+      <h2 class="section-title gs-reveal">01_Experience</h2>
+      <div class="grid" id="experience-grid">
+        <div class="card gs-reveal">
           <div class="card-header">
             <h3>Lira Lab (USC)</h3>
             <span class="role">Grad. Student Researcher</span>
@@ -376,7 +381,7 @@
           <div class="card-footer date">Oct 2024 - Present</div>
         </div>
 
-        <div class="card">
+        <div class="card gs-reveal">
           <div class="card-header">
             <h3>BlackRock</h3>
             <span class="role">SWE Intern (Risk & Quant.)</span>
@@ -397,7 +402,7 @@
           <div class="card-footer date">Jan 2025 - June 2025</div>
         </div>
 
-        <div class="card">
+        <div class="card gs-reveal">
           <div class="card-header">
             <h3>Emotorad</h3>
             <span class="role">Cloud & Backend Eng. Intern</span>
@@ -419,9 +424,9 @@
         </div>
       </div>
 
-      <h2 class="section-title">02_Projects</h2>
-      <div class="grid">
-        <a class="card" href="https://catan.adsrivatsa.com" target="_blank" rel="noopener noreferrer">
+      <h2 class="section-title gs-reveal">02_Projects</h2>
+      <div class="grid" id="projects-grid">
+        <a class="card gs-reveal" href="https://catan.adsrivatsa.com" target="_blank" rel="noopener noreferrer">
           <div class="card-header">
             <h3>Catan Infrastructure</h3>
           </div>
@@ -434,7 +439,7 @@
           </p>
         </a>
 
-        <a class="card" href="https://github.com/adsrivatsa/chess-bot" target="_blank" rel="noopener noreferrer">
+        <a class="card gs-reveal" href="https://github.com/adsrivatsa/chess-bot" target="_blank" rel="noopener noreferrer">
           <div class="card-header">
             <div style="display: flex; align-items: center; gap: 10px">
               <h3 style="margin: 0">Chess Bot</h3>
@@ -465,7 +470,7 @@
           </p>
         </a>
 
-        <a class="card" href="https://wyntersdreams.com" target="_blank" rel="noopener noreferrer">
+        <a class="card gs-reveal" href="https://wyntersdreams.com" target="_blank" rel="noopener noreferrer">
           <div class="card-header">
             <h3>Wynter's Dreams</h3>
           </div>
@@ -481,9 +486,9 @@
         </a>
       </div>
 
-      <h2 class="section-title">03_Published_Research</h2>
+      <h2 class="section-title gs-reveal">03_Published_Research</h2>
 
-      <a class="card" href="https://thegrenze.com/index.php?display=page&view=journalabstract&absid=4346&id=8" target="_blank" rel="noopener noreferrer">
+      <a id="research-card" class="card gs-reveal" href="https://thegrenze.com/index.php?display=page&view=journalabstract&absid=4346&id=8" target="_blank" rel="noopener noreferrer">
         <div class="card-header">
           <h3>LSTM-Based Market "Hype Detector"</h3>
         </div>
@@ -509,9 +514,9 @@
         </div>
       </a>
 
-      <h2 class="section-title">04_Library</h2>
+      <h2 class="section-title gs-reveal">04_Library</h2>
 
-      <div class="terminal-window">
+      <div class="terminal-window gs-reveal">
         <div class="terminal-header">
           <span>user@adsrivatsa:~ cat /library/reading_list.txt</span>
           <span>Total_Entries: 42</span>
@@ -565,5 +570,91 @@
         </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/ScrollTrigger.min.js"></script>
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero — fade up on page load
+      const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      heroTl
+        .from(".hero", { autoAlpha: 0, y: 40, duration: 0.7 })
+        .from(".hero h1", { autoAlpha: 0, x: -30, duration: 0.5 }, "-=0.3")
+        .from(".hero p", { autoAlpha: 0, x: -20, duration: 0.4 }, "-=0.2")
+        .from(
+          ".hero .btn",
+          { autoAlpha: 0, y: 15, duration: 0.4, stagger: 0.1 },
+          "-=0.2"
+        );
+
+      // Section titles — slide in from left
+      gsap.utils.toArray(".section-title.gs-reveal").forEach((title) => {
+        gsap.from(title, {
+          scrollTrigger: {
+            trigger: title,
+            start: "top 88%",
+            toggleActions: "play none none none",
+          },
+          autoAlpha: 0,
+          x: -40,
+          duration: 0.6,
+          ease: "power2.out",
+        });
+      });
+
+      // Experience cards — stagger from left
+      gsap.from("#experience-grid .card", {
+        scrollTrigger: {
+          trigger: "#experience-grid",
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        autoAlpha: 0,
+        x: -50,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power2.out",
+      });
+
+      // Project cards — stagger from right
+      gsap.from("#projects-grid .card", {
+        scrollTrigger: {
+          trigger: "#projects-grid",
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        autoAlpha: 0,
+        x: 50,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power2.out",
+      });
+
+      // Research card — fade up
+      gsap.from("#research-card", {
+        scrollTrigger: {
+          trigger: "#research-card",
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        autoAlpha: 0,
+        y: 40,
+        duration: 0.7,
+        ease: "power2.out",
+      });
+
+      // Terminal window — fade up
+      gsap.from(".terminal-window", {
+        scrollTrigger: {
+          trigger: ".terminal-window",
+          start: "top 88%",
+          toggleActions: "play none none none",
+        },
+        autoAlpha: 0,
+        y: 50,
+        duration: 0.7,
+        ease: "power2.out",
+      });
+    </script>
   </body>
 </html>
