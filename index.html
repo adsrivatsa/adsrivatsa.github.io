@@ -49,10 +49,22 @@
         font-weight: 500;
       }
 
+      #bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
       .container {
         max-width: 920px;
         margin: 0 auto;
         padding: 48px 24px;
+        position: relative;
+        z-index: 1;
       }
 
       h1,
@@ -116,7 +128,6 @@
         display: flex;
         flex-direction: column;
       }
-
 
       .card-header {
         display: flex;
@@ -223,7 +234,6 @@
         border-color: var(--accent);
       }
 
-
       .research-item {
         border-left: 3px solid var(--accent);
         padding-left: 20px;
@@ -326,6 +336,7 @@
     </style>
   </head>
   <body>
+    <canvas id="bg-canvas"></canvas>
     <div class="container">
       <div class="hero gs-reveal">
         <h1>Abhinav Srivatsa</h1>
@@ -426,7 +437,12 @@
 
       <h2 class="section-title gs-reveal">02_Projects</h2>
       <div class="grid" id="projects-grid">
-        <a class="card gs-reveal" href="https://catan.adsrivatsa.com" target="_blank" rel="noopener noreferrer">
+        <a
+          class="card gs-reveal"
+          href="https://catan.adsrivatsa.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <div class="card-header">
             <h3>Catan Infrastructure</h3>
           </div>
@@ -439,7 +455,12 @@
           </p>
         </a>
 
-        <a class="card gs-reveal" href="https://github.com/adsrivatsa/chess-bot" target="_blank" rel="noopener noreferrer">
+        <a
+          class="card gs-reveal"
+          href="https://github.com/adsrivatsa/chess-bot"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <div class="card-header">
             <div style="display: flex; align-items: center; gap: 10px">
               <h3 style="margin: 0">Chess Bot</h3>
@@ -470,7 +491,12 @@
           </p>
         </a>
 
-        <a class="card gs-reveal" href="https://wyntersdreams.com" target="_blank" rel="noopener noreferrer">
+        <a
+          class="card gs-reveal"
+          href="https://wyntersdreams.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <div class="card-header">
             <h3>Wynter's Dreams</h3>
           </div>
@@ -488,7 +514,13 @@
 
       <h2 class="section-title gs-reveal">03_Published_Research</h2>
 
-      <a id="research-card" class="card gs-reveal" href="https://thegrenze.com/index.php?display=page&view=journalabstract&absid=4346&id=8" target="_blank" rel="noopener noreferrer">
+      <a
+        id="research-card"
+        class="card gs-reveal"
+        href="https://thegrenze.com/index.php?display=page&view=journalabstract&absid=4346&id=8"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <div class="card-header">
           <h3>LSTM-Based Market "Hype Detector"</h3>
         </div>
@@ -570,13 +602,266 @@
         </div>
       </div>
     </div>
+    <script>
+      ;(function () {
+        const canvas = document.getElementById("bg-canvas")
+        const ctx = canvas.getContext("2d")
+        let w, h, nodes, packets, containerLeft, containerRight, time = 0
+
+        const NODE_COUNT = 60
+        const CONNECT_DIST = 150
+        const SPEED = 0.25
+        const GRID_SPACING = 50
+        const MAX_PACKETS = 12
+
+        const palette = [
+          { r: 35, g: 47, b: 62 },
+          { r: 55, g: 71, b: 90 },
+          { r: 255, g: 153, b: 0 },
+          { r: 20, g: 126, b: 186 }
+        ]
+
+        const SHAPES = [0, 0, 0, 1, 1, 2, 2, 3]
+        const LABELS = [
+          "\u03BB","API","DB","S3","VPC","EC2","K8s","gRPC",
+          "DNS","CDN","CI","SQS","RDS","ECS","IAM","TCP"
+        ]
+
+        function resize() {
+          w = canvas.width = window.innerWidth
+          h = canvas.height = window.innerHeight
+          const maxW = 920
+          containerLeft = (w - maxW) / 2
+          containerRight = (w + maxW) / 2
+        }
+
+        function marginX() {
+          if (w > 1000 && Math.random() < 0.72) {
+            if (Math.random() < 0.5) {
+              return Math.random() * Math.max(containerLeft - 10, 0) + 5
+            }
+            return containerRight + 10 + Math.random() * Math.max(w - containerRight - 10, 0)
+          }
+          return Math.random() * w
+        }
+
+        function createNode() {
+          var cIdx = Math.random() < 0.15 ? 2
+                   : Math.random() < 0.12 ? 3
+                   : Math.random() < 0.5 ? 0 : 1
+          return {
+            x: marginX(),
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * SPEED,
+            vy: (Math.random() - 0.5) * SPEED,
+            r: 2 + Math.random() * 2,
+            color: palette[cIdx],
+            alpha: 0.3 + Math.random() * 0.2,
+            shape: SHAPES[Math.floor(Math.random() * SHAPES.length)],
+            pulsePhase: Math.random() * Math.PI * 2,
+            pulseSpeed: 0.01 + Math.random() * 0.015,
+            label: Math.random() < 0.2
+              ? LABELS[Math.floor(Math.random() * LABELS.length)]
+              : null
+          }
+        }
+
+        function createPacket(a, b) {
+          return {
+            from: a, to: b, t: 0,
+            speed: 0.008 + Math.random() * 0.008,
+            color: Math.random() < 0.4 ? palette[2] : palette[3]
+          }
+        }
+
+        function init() {
+          resize()
+          nodes = []
+          packets = []
+          for (var i = 0; i < NODE_COUNT; i++) nodes.push(createNode())
+        }
+
+        function fade(n) {
+          if (w <= 1000) return n.alpha * 0.35
+          if (n.x > containerLeft + 40 && n.x < containerRight - 40) return n.alpha * 0.1
+          return n.alpha
+        }
+
+        function fadeXY(x, base) {
+          if (w <= 1000) return base * 0.35
+          if (x > containerLeft + 40 && x < containerRight - 40) return base * 0.1
+          return base
+        }
+
+        function drawShape(x, y, r, shape, fill) {
+          ctx.beginPath()
+          if (shape === 0) {
+            ctx.arc(x, y, r, 0, Math.PI * 2)
+          } else if (shape === 1) {
+            ctx.rect(x - r, y - r, r * 2, r * 2)
+          } else if (shape === 2) {
+            ctx.moveTo(x, y - r * 1.2)
+            ctx.lineTo(x + r * 1.2, y)
+            ctx.lineTo(x, y + r * 1.2)
+            ctx.lineTo(x - r * 1.2, y)
+            ctx.closePath()
+          } else {
+            for (var a = 0; a < 6; a++) {
+              var ang = (Math.PI / 3) * a - Math.PI / 6
+              var px = x + r * 1.1 * Math.cos(ang)
+              var py = y + r * 1.1 * Math.sin(ang)
+              a === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py)
+            }
+            ctx.closePath()
+          }
+          ctx.fillStyle = fill
+          ctx.fill()
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, w, h)
+          time++
+
+          // Faint grid
+          var gx, gy, ga
+          for (gx = 0; gx < w; gx += GRID_SPACING) {
+            ga = fadeXY(gx, 0.04)
+            if (ga > 0.005) {
+              ctx.beginPath()
+              ctx.moveTo(gx, 0)
+              ctx.lineTo(gx, h)
+              ctx.strokeStyle = "rgba(55,71,90," + ga + ")"
+              ctx.lineWidth = 0.5
+              ctx.stroke()
+            }
+          }
+          for (gy = 0; gy < h; gy += GRID_SPACING) {
+            ctx.beginPath()
+            ctx.moveTo(0, gy)
+            ctx.lineTo(w, gy)
+            ctx.strokeStyle = "rgba(55,71,90,0.03)"
+            ctx.lineWidth = 0.5
+            ctx.stroke()
+          }
+
+          // Update nodes
+          for (var ni = 0; ni < nodes.length; ni++) {
+            var n = nodes[ni]
+            n.x += n.vx
+            n.y += n.vy
+            if (n.x < 0 || n.x > w) n.vx *= -1
+            if (n.y < 0 || n.y > h) n.vy *= -1
+            n.x = Math.max(0, Math.min(w, n.x))
+            n.y = Math.max(0, Math.min(h, n.y))
+          }
+
+          // Connections (dashed)
+          var connections = []
+          ctx.save()
+          ctx.setLineDash([4, 4])
+          for (var i = 0; i < nodes.length; i++) {
+            for (var j = i + 1; j < nodes.length; j++) {
+              var dx = nodes[i].x - nodes[j].x
+              var dy = nodes[i].y - nodes[j].y
+              var dist = Math.sqrt(dx * dx + dy * dy)
+              if (dist < CONNECT_DIST) {
+                var aI = fade(nodes[i]), aJ = fade(nodes[j])
+                var lineA = Math.min(aI, aJ) * (1 - dist / CONNECT_DIST) * 0.45
+                if (lineA > 0.01) {
+                  ctx.beginPath()
+                  ctx.moveTo(nodes[i].x, nodes[i].y)
+                  ctx.lineTo(nodes[j].x, nodes[j].y)
+                  ctx.strokeStyle = "rgba(55,71,90," + lineA + ")"
+                  ctx.lineWidth = 0.7
+                  ctx.stroke()
+                  connections.push([i, j])
+                }
+              }
+            }
+          }
+          ctx.setLineDash([])
+          ctx.restore()
+
+          // Spawn data packets
+          if (connections.length > 0 && packets.length < MAX_PACKETS && Math.random() < 0.03) {
+            var ci = connections[Math.floor(Math.random() * connections.length)]
+            packets.push(createPacket(nodes[ci[0]], nodes[ci[1]]))
+          }
+
+          // Draw packets
+          for (var p = packets.length - 1; p >= 0; p--) {
+            var pk = packets[p]
+            pk.t += pk.speed
+            if (pk.t > 1) { packets.splice(p, 1); continue }
+            var px = pk.from.x + (pk.to.x - pk.from.x) * pk.t
+            var py = pk.from.y + (pk.to.y - pk.from.y) * pk.t
+            var pa = fadeXY(px, 0.7)
+            if (pa > 0.02) {
+              ctx.beginPath()
+              ctx.arc(px, py, 1.8, 0, Math.PI * 2)
+              ctx.fillStyle = "rgba(" + pk.color.r + "," + pk.color.g + "," + pk.color.b + "," + pa + ")"
+              ctx.fill()
+              // Glow
+              ctx.beginPath()
+              ctx.arc(px, py, 5, 0, Math.PI * 2)
+              ctx.fillStyle = "rgba(" + pk.color.r + "," + pk.color.g + "," + pk.color.b + "," + (pa * 0.15) + ")"
+              ctx.fill()
+            }
+          }
+
+          // Draw nodes
+          for (var k = 0; k < nodes.length; k++) {
+            var nd = nodes[k]
+            var baseA = fade(nd)
+            var pulse = 1 + 0.2 * Math.sin(time * nd.pulseSpeed + nd.pulsePhase)
+            var al = baseA * pulse
+            if (al < 0.01) continue
+
+            var rr = nd.r * pulse
+            var col = "rgba(" + nd.color.r + "," + nd.color.g + "," + nd.color.b + "," + al + ")"
+
+            drawShape(nd.x, nd.y, rr, nd.shape, col)
+
+            // Outer ring on larger circles
+            if (nd.shape === 0 && nd.r > 3) {
+              ctx.beginPath()
+              ctx.arc(nd.x, nd.y, rr + 3, 0, Math.PI * 2)
+              ctx.strokeStyle = "rgba(" + nd.color.r + "," + nd.color.g + "," + nd.color.b + "," + (al * 0.3) + ")"
+              ctx.lineWidth = 0.6
+              ctx.stroke()
+            }
+
+            // Labels
+            if (nd.label && baseA > 0.15) {
+              ctx.font = "600 8px 'JetBrains Mono', monospace"
+              ctx.fillStyle = "rgba(" + nd.color.r + "," + nd.color.g + "," + nd.color.b + "," + (al * 0.7) + ")"
+              ctx.textAlign = "center"
+              ctx.fillText(nd.label, nd.x, nd.y - rr - 5)
+            }
+          }
+
+          requestAnimationFrame(animate)
+        }
+
+        window.addEventListener("resize", function () {
+          resize()
+          for (var i = 0; i < nodes.length; i++) {
+            if (nodes[i].x > w) nodes[i].x = w - 10
+            if (nodes[i].y > h) nodes[i].y = h - 10
+          }
+        })
+
+        init()
+        animate()
+      })()
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/ScrollTrigger.min.js"></script>
     <script>
-      gsap.registerPlugin(ScrollTrigger);
+      gsap.registerPlugin(ScrollTrigger)
 
       // Hero — fade up on page load
-      const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } })
       heroTl
         .from(".hero", { autoAlpha: 0, y: 40, duration: 0.7 })
         .from(".hero h1", { autoAlpha: 0, x: -30, duration: 0.5 }, "-=0.3")
@@ -585,7 +870,7 @@
           ".hero .btn",
           { autoAlpha: 0, y: 15, duration: 0.4, stagger: 0.1 },
           "-=0.2"
-        );
+        )
 
       // Section titles — slide in from left
       gsap.utils.toArray(".section-title.gs-reveal").forEach((title) => {
@@ -593,68 +878,68 @@
           scrollTrigger: {
             trigger: title,
             start: "top 88%",
-            toggleActions: "play none none none",
+            toggleActions: "play none none none"
           },
           autoAlpha: 0,
           x: -40,
           duration: 0.6,
-          ease: "power2.out",
-        });
-      });
+          ease: "power2.out"
+        })
+      })
 
       // Experience cards — stagger from left
       gsap.from("#experience-grid .card", {
         scrollTrigger: {
           trigger: "#experience-grid",
           start: "top 85%",
-          toggleActions: "play none none none",
+          toggleActions: "play none none none"
         },
         autoAlpha: 0,
         x: -50,
         duration: 0.6,
         stagger: 0.15,
-        ease: "power2.out",
-      });
+        ease: "power2.out"
+      })
 
       // Project cards — stagger from right
       gsap.from("#projects-grid .card", {
         scrollTrigger: {
           trigger: "#projects-grid",
           start: "top 85%",
-          toggleActions: "play none none none",
+          toggleActions: "play none none none"
         },
         autoAlpha: 0,
         x: 50,
         duration: 0.6,
         stagger: 0.15,
-        ease: "power2.out",
-      });
+        ease: "power2.out"
+      })
 
       // Research card — fade up
       gsap.from("#research-card", {
         scrollTrigger: {
           trigger: "#research-card",
           start: "top 85%",
-          toggleActions: "play none none none",
+          toggleActions: "play none none none"
         },
         autoAlpha: 0,
         y: 40,
         duration: 0.7,
-        ease: "power2.out",
-      });
+        ease: "power2.out"
+      })
 
       // Terminal window — fade up
       gsap.from(".terminal-window", {
         scrollTrigger: {
           trigger: ".terminal-window",
           start: "top 88%",
-          toggleActions: "play none none none",
+          toggleActions: "play none none none"
         },
         autoAlpha: 0,
         y: 50,
         duration: 0.7,
-        ease: "power2.out",
-      });
+        ease: "power2.out"
+      })
     </script>
   </body>
 </html>
